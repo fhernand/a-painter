@@ -66,6 +66,7 @@ AFRAME.registerComponent('brush', {
             self.currentStroke = null;
           }
           self.active = false;
+          self.endStroke();
         }
       }
     });
@@ -96,5 +97,8 @@ AFRAME.registerComponent('brush', {
   startNewStroke: function () {
     this.currentStroke = this.system.addNewStroke(this.data.brush, this.color, this.data.size);
     this.el.emit('stroke-started', {entity: this.el, stroke: this.currentStroke});
-  }
+  },
+  endStroke: function () {
+    this.el.emit('stroke-ended', {entity: this.el, stroke: this.currentStroke});
+  }  
 });
