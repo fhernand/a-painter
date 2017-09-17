@@ -58,15 +58,17 @@ AFRAME.registerComponent('brush', {
         if (value > 0.1) {
           if (!self.active) {
             self.startNewStroke();
+			console.log("startstroke controllerbutton")
             self.active = true;
           }
         } else {
           if (self.active) {
             self.previousEntity = self.currentEntity;
             self.currentStroke = null;
+			console.log("Endstroke should be called");
+			self.endStroke();
           }
           self.active = false;
-          self.endStroke();
         }
       }
     });
@@ -99,6 +101,6 @@ AFRAME.registerComponent('brush', {
     this.el.emit('stroke-started', {entity: this.el, stroke: this.currentStroke});
   },
   endStroke: function () {
-    this.el.emit('stroke-ended', {entity: this.el, stroke: this.currentStroke});
+    this.el.emit('stroke-ended');
   }  
 });
