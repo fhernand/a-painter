@@ -216,6 +216,7 @@ AFRAME.registerSystem('brush', {
         var pointerPosition = this.getPointerPosition(position, orientation);
         stroke.addPoint(position, orientation, pointerPosition, pressure, timestamp);
       }
+      entity.emit('stroke-ended', {entity, stroke});
     }
   },
   addNewStroke: function (brushName, color, size, owner, timestamp) {
