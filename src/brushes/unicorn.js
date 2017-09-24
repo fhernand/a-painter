@@ -162,7 +162,7 @@
 
   var lines = [
     {
-      name: 'flat',
+      name: 'unicorn',
       materialOptions: {
         type: 'flat'
       },
