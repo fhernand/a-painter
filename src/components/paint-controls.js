@@ -57,7 +57,8 @@ AFRAME.registerComponent('paint-controls', {
         });
 
       } else if (controllerName === 'vive-controls') {
-        el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
+        el.setAttribute('obj-model', {obj: 'assets/models/vive-controller.obj', mtl: 'assets/models/vive-controller.mtl'});
+        //el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
         el.setAttribute('teleport-controls', {button: 'trackpad'});
         tooltips = Array.prototype.slice.call(document.querySelectorAll('.vive-tooltips'));
         el.addEventListener('axismove', function (evt) {
