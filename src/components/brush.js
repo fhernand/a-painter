@@ -61,7 +61,6 @@ AFRAME.registerComponent('brush', {
             self.active = true;
           }
 	  self.el.setAttribute('brush', 'ledsize', self.sizeModifier);
-	  //self.data.ledsize = self.sizeModifier;
         } else {
           if (self.active) {
             self.previousEntity = self.currentEntity;
@@ -83,7 +82,6 @@ AFRAME.registerComponent('brush', {
       this.el.emit('brushsize-changed', {size: data.size});
     }
     if (oldData.ledsize !== data.ledsize) {
-	    console.log("Before emitting ledsize change: ", data.ledsize); 
       this.el.emit('ledsize-changed', {ledsize: data.ledsize});
     }
   },
