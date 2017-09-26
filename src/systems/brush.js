@@ -86,6 +86,7 @@ AFRAME.registerBrush = function (name, definition, options) {
       this.object3D = new THREE.Object3D();
       this.data = {
         points: [],
+	ledsize: 0,
         size: brushSize,
         prevPosition: null,
         prevPointerPosition: null,
