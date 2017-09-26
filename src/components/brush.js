@@ -82,6 +82,7 @@ AFRAME.registerComponent('brush', {
       this.el.emit('brushsize-changed', {size: data.size});
     }
     if (oldData.ledsize !== data.ledsize) {
+	    console.log("Before emitting ledsize change: ", data.ledsize); 
       this.el.emit('ledsize-changed', {ledsize: data.ledsize});
     }
   },
