@@ -20,7 +20,7 @@ AFRAME.registerComponent('brush', {
     this.strokeEntities = [];
 
     this.sizeModifier = 0.0;
-    this sizepartition = 0;
+    this.sizepartition = 0;
     this.textures = {};
     this.currentMap = 0;
 
