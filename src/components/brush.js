@@ -60,7 +60,8 @@ AFRAME.registerComponent('brush', {
             self.startNewStroke();
             self.active = true;
           }
-	  self.el.setAttribute('brush', 'ledsize', self.sizeModifier);
+	  var sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0,06) + 1, 15);	
+	  self.el.setAttribute('brush', 'ledsize', sizepartition);
         } else {
           if (self.active) {
             self.previousEntity = self.currentEntity;
