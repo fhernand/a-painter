@@ -220,11 +220,6 @@ AFRAME.registerSystem('brush', {
       entity.emit('stroke-ended');
     }
   },
-  endStroke: function (brushName, color, size, owner, timestamp) {
-    owner = owner || 'local';
-    timestamp = timestamp || Date.now();
-	entity.emit('stroke-ended');
-  },
   addNewStroke: function (brushName, color, size, owner, timestamp) {
     owner = owner || 'local';
     timestamp = timestamp || Date.now();
