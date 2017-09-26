@@ -62,7 +62,7 @@ AFRAME.registerComponent('brush', {
             self.active = true;
           }
 	  self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0,06) + 1, 15);
-		console.log(self.sizepartition);
+		console.log(Math.floor((self.sizeModifier-0.1)/0,06) + 1);
 	  self.el.setAttribute('brush', 'ledsize', self.sizepartition);
         } else {
           if (self.active) {
