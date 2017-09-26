@@ -72,10 +72,6 @@ AFRAME.registerSystem('painter', {
         self.startPainting = true;
       }
     });
-
-	document.addEventListener('stroke-ended', function () {
-		self.brushSystem.endStroke();
-    });
 	
     // @fixme This is just for debug until we'll get some UI
     document.addEventListener('keyup', function (event) {
