@@ -20,6 +20,7 @@ AFRAME.registerComponent('brush', {
     this.strokeEntities = [];
 
     this.sizeModifier = 0.0;
+    this sizepartition = 0;
     this.textures = {};
     this.currentMap = 0;
 
@@ -60,9 +61,9 @@ AFRAME.registerComponent('brush', {
             self.startNewStroke();
             self.active = true;
           }
-	  var sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0,06) + 1, 15);
-		console.log(sizepartition);
-	  self.el.setAttribute('brush', 'ledsize', sizepartition);
+	  self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0,06) + 1, 15);
+		console.log(self.sizepartition);
+	  self.el.setAttribute('brush', 'ledsize', self.sizepartition);
         } else {
           if (self.active) {
             self.previousEntity = self.currentEntity;
