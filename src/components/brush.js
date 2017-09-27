@@ -87,9 +87,6 @@ AFRAME.registerComponent('brush', {
     if (oldData.size !== data.size) {
       this.el.emit('brushsize-changed', {size: data.size});
     }
-    if (oldData.ledsize !== data.ledsize) {
-      
-    }
   },
   tick: (function () {
     var position = new THREE.Vector3();
@@ -111,7 +108,7 @@ AFRAME.registerComponent('brush', {
   endStroke: function () {
     this.el.emit('stroke-ended');
   },
-newLEDSize: function (LEDSize) {
-    this.el.emit('ledsize-changed', {ledsize: data.ledsize});
+  newLEDSize: function (LEDSize) {
+    this.el.emit('ledsize-changed', {ledsize: LEDSize});
   }
 });
