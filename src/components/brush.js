@@ -21,6 +21,7 @@ AFRAME.registerComponent('brush', {
 
     this.sizeModifier = 0.0;
     this.sizepartition = 0;
+    this.oldsizepartition = 0;
     this.textures = {};
     this.currentMap = 0;
 
@@ -62,7 +63,10 @@ AFRAME.registerComponent('brush', {
             self.active = true;
           }
 	  self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0.06) + 1, 15);
-	  self.el.setAttribute('brush', 'ledsize', self.sizepartition);
+	  if(self.sizepartition != self.oldsizepartition){
+		  self.newLEDSize(self.sizepartition);
+		  self.oldsizepartition = self.sizepartition;
+	  }
         } else {
           if (self.active) {
             self.previousEntity = self.currentEntity;
@@ -84,7 +88,7 @@ AFRAME.registerComponent('brush', {
       this.el.emit('brushsize-changed', {size: data.size});
     }
     if (oldData.ledsize !== data.ledsize) {
-      this.el.emit('ledsize-changed', {ledsize: data.ledsize});
+      
     }
   },
   tick: (function () {
@@ -106,5 +110,8 @@ AFRAME.registerComponent('brush', {
   },
   endStroke: function () {
     this.el.emit('stroke-ended');
-  }  
+  },
+newLEDSize: function (LEDSize) {
+    this.el.emit('ledsize-changed', {ledsize: data.ledsize});
+  }
 });
