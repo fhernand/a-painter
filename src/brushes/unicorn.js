@@ -168,7 +168,7 @@
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_flat.gif'
+      thumbnail: 'brushes/thumb_unicorn.gif'
     }
   ];
 
