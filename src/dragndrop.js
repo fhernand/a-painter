@@ -77,8 +77,9 @@ window.addEventListener('load', function (event) {
           }
 
           // find a random position in a side of the room
-          var pos = [Math.random() * 3 - 1.5, 1 + Math.random() - 0.5, -1.4 + Math.random() * 0.2];
-
+          //var pos = [Math.random() * 3 - 1.5, 1 + Math.random() - 0.5, -1.4 + Math.random() * 0.2];
+          var pos = [0, 0.5 + height / 2, 0];
+          
           // create a-image entity and set attributes
           var entity = document.createElement('a-image');
           entity.setAttribute('src', event.target.result);
