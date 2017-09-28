@@ -117,15 +117,18 @@ AFRAME.registerSystem('painter', {
         self.saveJSON();
       }
       if (event.keyCode === 79) { // o - toggle template objects+images visibility
-        self.showTemplateItems = !self.showTemplateItems;
-        var templateItems = document.querySelectorAll('.templateitem');
-        for (var i = 0; i < templateItems.length; i++) {
-            templateItems[i].setAttribute('visible', self.showTemplateItems);
-        }
+        self.toggleRefImages();
       }
     });
 
     console.info('A-PAINTER Version: ' + this.version);
+  },
+  toggleRefImages: function (){
+    self.showTemplateItems = !self.showTemplateItems;  
+    var templateItems = document.querySelectorAll('.templateitem');
+        for (var i = 0; i < templateItems.length; i++) {
+            templateItems[i].setAttribute('visible', self.showTemplateItems);
+        }
   },
   saveJSON: function () {
     var json = this.brushSystem.getJSON();
