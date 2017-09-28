@@ -47,7 +47,7 @@ AFRAME.registerComponent('brush', {
       if (!self.data.enabled) { return; }
       // Grip
       if (evt.detail.id === 2) {
-	this.el.sceneEl.systems.painter.toggleRefImages();
+	self.el.sceneEl.systems.painter.toggleRefImages();
         //self.system.undo();
       }
     });
