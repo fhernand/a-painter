@@ -300,7 +300,7 @@ AFRAME.registerSystem('brush', {
     var pointerPosition = new THREE.Vector3();
     var controllerOffset = {
       'vive-controls': {
-        vec: new THREE.Vector3(0, 9, 1.3),
+        vec: new THREE.Vector3(0, 9, 1.6),
         mult: -0.09
       },
       'oculus-touch-controls': {
