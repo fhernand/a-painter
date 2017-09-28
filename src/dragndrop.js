@@ -69,11 +69,11 @@ window.addEventListener('load', function (event) {
           // find good image size
           var width, height;
           if (img.width > img.height) {
-            width = 1.0;
-            height = img.height / img.width;
+            width = Math.floor(img.width / 1024);
+            height = width * img.height / img.width;
           } else {
-            height = 1.0;
-            width = img.width / img.height;
+            height = Math.floor(img.height / 1024);
+            width = height * img.width / img.height;
           }
 
           // find a random position in a side of the room
