@@ -33,7 +33,7 @@
         defaultTextureOptions = {
           map: map,
           transparent: true,
-          alphaTest: 0.5
+          opacity: 0.5
         };
       }
 
