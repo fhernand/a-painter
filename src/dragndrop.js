@@ -50,7 +50,7 @@ window.addEventListener('load', function (event) {
           // set all mesh objects to dark gray
           for (var o = 0; o < mesh.children.length; o++) {
             var child = mesh.children[o];
-            if (child.material){
+            if (child.material.color){
               child.material.color.set('#333');
             }
           }
