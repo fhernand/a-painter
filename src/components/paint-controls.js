@@ -21,6 +21,7 @@ AFRAME.registerComponent('paint-controls', {
     this.onModelLoaded = this.onModelLoaded.bind(this);
     el.addEventListener('model-loaded', this.onModelLoaded);
 
+    /*
     var onAxisMove = function(evt) {
       if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
 
@@ -30,6 +31,7 @@ AFRAME.registerComponent('paint-controls', {
 
       self.el.setAttribute('brush', 'size', value);
     }
+    */
 
     el.addEventListener('controllerconnected', function (evt) {
       var controllerName = evt.detail.name;
@@ -60,6 +62,7 @@ AFRAME.registerComponent('paint-controls', {
         el.setAttribute('obj-model', {obj: 'assets/models/vive-controller.obj', mtl: 'assets/models/vive-controller.mtl'});
         //el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
         //el.setAttribute('teleport-controls', {button: 'trackpad'});
+        /*
         tooltips = Array.prototype.slice.call(document.querySelectorAll('.vive-tooltips'));
         el.addEventListener('axismove', function (evt) {
           if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
@@ -80,20 +83,24 @@ AFRAME.registerComponent('paint-controls', {
 
           self.el.setAttribute('brush', 'size', value);
         });
+        
 
         el.addEventListener('trackpadtouchstart', function () {
           self.touchStarted = true;
         });
 
         self.touchStarted = false;
+      */
 
       } else { return; }
 
+      /*
       if (!!tooltips) {
         tooltips.forEach(function (tooltip) {
           tooltip.setAttribute('visible', true);
         });
       }
+      */
 
       this.controller = controllerName;
     });
@@ -118,6 +125,7 @@ AFRAME.registerComponent('paint-controls', {
       self.numberStrokes++;
       self.system.numberStrokes++;
 
+      /*
       // 3 Strokes to hide
       if (self.system.numberStrokes === 3) {
         var tooltips = Array.prototype.slice.call(document.querySelectorAll('[tooltip]'));
@@ -139,6 +147,7 @@ AFRAME.registerComponent('paint-controls', {
         tween.start();
       }
     });
+    */
   },
 
   changeBrushColor: function (color) {
