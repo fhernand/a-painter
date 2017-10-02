@@ -27,9 +27,9 @@ AFRAME.registerSystem('painter', {
     if (urlParams.url || urlParams.urljson) {
       var isBinary = urlParams.urljson === undefined;
       this.brushSystem.loadFromUrl(urlParams.url || urlParams.urljson, isBinary);
-      document.getElementById('logo').setAttribute('visible', false);
+      //document.getElementById('logo').setAttribute('visible', false);
       document.getElementById('acamera').setAttribute('orbit-controls', 'position', '0 1.6 3');
-      document.getElementById('apainter-logo').classList.remove('hidden');
+      //document.getElementById('apainter-logo').classList.remove('hidden');
       //document.getElementById('apainter-author').classList.remove('hidden'); // not used yet
     }
 
@@ -45,6 +45,7 @@ AFRAME.registerSystem('painter', {
         }
       });
     }
+    /*
     if (urlParams.floor !== undefined) {
       this.sceneEl.addEventListener('loaded', function (evt) {
         if (urlParams.floor === '') {
@@ -54,12 +55,14 @@ AFRAME.registerSystem('painter', {
         }
       });
     }
+    */
 
     this.startPainting = false;
     var self = this;
     document.addEventListener('stroke-started', function (event) {
       if (!self.startPainting) {
-        var logo = document.getElementById('logo');
+        /*
+	var logo = document.getElementById('logo');
         var mesh = logo.getObject3D('mesh');
         var tween = new AFRAME.TWEEN.Tween({ alpha: 1.0 })
           .to({alpha: 0.0}, 4000)
@@ -69,6 +72,7 @@ AFRAME.registerSystem('painter', {
           .onUpdate(function () {
             mesh.children[0].material.opacity = this.alpha;
           }).start();
+	 */
         self.startPainting = true;
       }
     });
