@@ -146,8 +146,9 @@ AFRAME.registerComponent('paint-controls', {
           });
         tween.start();
       }
+      */
     });
-    */
+ 
   },
 
   changeBrushColor: function (color) {
