@@ -6,13 +6,13 @@
       this.idx = 0;
       this.geometry = new THREE.BufferGeometry();
       this.vertices = new Float32Array(this.options.maxPoints * 3 * 3);
-      this.normals = new Float32Array(this.options.maxPoints * 3 * 3);
-      this.uvs = new Float32Array(this.options.maxPoints * 2 * 2);
+      //this.normals = new Float32Array(this.options.maxPoints * 3 * 3);
+      //this.uvs = new Float32Array(this.options.maxPoints * 2 * 2);
 
       this.geometry.setDrawRange(0, 0);
       this.geometry.addAttribute('position', new THREE.BufferAttribute(this.vertices, 3).setDynamic(true));
-      this.geometry.addAttribute('uv', new THREE.BufferAttribute(this.uvs, 2).setDynamic(true));
-      this.geometry.addAttribute('normal', new THREE.BufferAttribute(this.normals, 3).setDynamic(true));
+      //this.geometry.addAttribute('uv', new THREE.BufferAttribute(this.uvs, 2).setDynamic(true));
+      //this.geometry.addAttribute('normal', new THREE.BufferAttribute(this.normals, 3).setDynamic(true));
 
       var mesh = new THREE.Mesh(this.geometry, this.getMaterial());
       mesh.drawMode = THREE.TriangleStripDrawMode;
@@ -52,6 +52,7 @@
         return new THREE.MeshBasicMaterial(options);
     },
     addPoint: function (position, orientation, pointerPosition, pressure, timestamp) {
+      /*
       var uv = 0;
       for (i = 0; i < this.data.numPoints; i++) {
         this.uvs[ uv++ ] = i / (this.data.numPoints - 1);
@@ -60,6 +61,7 @@
         this.uvs[ uv++ ] = i / (this.data.numPoints - 1);
         this.uvs[ uv++ ] = 1;
       }
+      */
 
       var direction = new THREE.Vector3();
       direction.set(1, 0, 0);
@@ -80,15 +82,17 @@
       this.vertices[ this.idx++ ] = posB.y;
       this.vertices[ this.idx++ ] = posB.z;
 
-      this.computeVertexNormals();
-      this.geometry.attributes.normal.needsUpdate = true;
-      this.geometry.attributes.position.needsUpdate = true;
-      this.geometry.attributes.uv.needsUpdate = true;
+      //this.computeVertexNormals();
+      //this.geometry.attributes.normal.needsUpdate = true;
+      this.geometry.attributes.position.needsUpdate = false;
+      //this.geometry.attributes.uv.needsUpdate = true;
 
       this.geometry.setDrawRange(0, this.data.numPoints * 2);
 
       return true;
-    },
+    }
+    /*
+    ,
 
     computeVertexNormals: function () {
       var pA = new THREE.Vector3();
@@ -142,7 +146,7 @@
        /  \  /  \  /  \  /  \
       /____\/____\/____\/____\
       0    2     4     6     8
-      */
+      
 
       // Vertices that are shared across three triangles
       for (i = 2 * 3, il = this.idx - 2 * 3; i < il; i++) {
@@ -160,6 +164,7 @@
 
       this.geometry.normalizeNormals();
     }
+    */
   };
 
   var lines = [
