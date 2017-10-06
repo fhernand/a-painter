@@ -169,6 +169,27 @@
         type: 'flat'
       },
       thumbnail: 'brushes/thumb_unicorn.gif'
+    },
+    {
+      name: 'unicornsquare',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicorn.gif'
+    },
+    {
+      name: 'unicornround',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicorn.gif'
+    },
+    {
+      name: 'unicorndot',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicorn.gif'
     }
   ];
 
