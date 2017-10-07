@@ -192,7 +192,7 @@ AFRAME.registerSystem('brush', {
     function randNeg () { return 2 * Math.random() - 1; }
 
     for (var l = 0; l < numStrokes; l++) {
-      var brushName = 'flat';
+      var brushName = 'unicorn';
       var color = new THREE.Color(Math.random(), Math.random(), Math.random());
       var size = Math.random() * 0.1;
       var numPoints = parseInt(Math.random() * 500);
