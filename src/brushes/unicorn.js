@@ -84,7 +84,7 @@
 
       //this.computeVertexNormals();
       //this.geometry.attributes.normal.needsUpdate = true;
-      this.geometry.attributes.position.needsUpdate = false;
+      this.geometry.attributes.position.needsUpdate = true;
       //this.geometry.attributes.uv.needsUpdate = true;
 
       this.geometry.setDrawRange(0, this.data.numPoints * 2);
