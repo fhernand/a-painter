@@ -25,6 +25,8 @@ AFRAME.registerComponent('brush', {
     this.textures = {};
     this.currentMap = 0;
 
+    this.addedDeltas = 0;
+	  
     this.model = this.el.getObject3D('mesh');
     this.drawing = false;
 
@@ -95,10 +97,12 @@ AFRAME.registerComponent('brush', {
     var scale = new THREE.Vector3();
 
     return function tick (time, delta) {
-      if (this.currentStroke && this.active) {
+      this.addedDeltas += delta;
+      if (this.addedDeltas > 50 && this.currentStroke && this.active) {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
         this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizeModifier, time);
+	this.addedDeltas = 0;
       }
     };
   })(),
