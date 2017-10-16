@@ -46,7 +46,7 @@ window.addEventListener('load', function (event) {
           var objloader = new AFRAME.THREE.OBJLoader();
           var mesh = objloader.parse(event.target.result);
 
-          mesh.geometry.scale(3, 3, 3);
+          mesh.scale(3, 3, 3);
           
           var entity = document.createElement('a-entity');
           // set all mesh objects to dark gray
