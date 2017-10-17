@@ -173,35 +173,35 @@
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd.gif'
     },
     {
       name: 'unicornsquare',
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_square.gif'
     },
     {
       name: 'unicornround',
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_round.gif'
     },
     {
       name: 'unicornsquare2',
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_square2.gif'
     },
     {
       name: 'unicornround2',
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_round2.gif'
     },
 
     {
@@ -209,7 +209,7 @@
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_dot.gif'
     }
   ];
 
