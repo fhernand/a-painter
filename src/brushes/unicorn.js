@@ -39,8 +39,8 @@
 
         defaultOptions = {
           color: this.data.color,
-          transparent: true,
-          alphaTest: 0.5,
+          //transparent: true,
+          //alphaTest: 0.5,
           side: THREE.DoubleSide
         };
 
