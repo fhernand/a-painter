@@ -98,7 +98,7 @@ AFRAME.registerComponent('brush', {
 
     return function tick (time, delta) {
       this.addedDeltas += delta;
-      if (this.addedDeltas > 50 && this.currentStroke && this.active) {
+      if (this.addedDeltas > 100 && this.currentStroke && this.active) {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
         this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizeModifier, time);

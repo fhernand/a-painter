@@ -39,8 +39,8 @@
 
         defaultOptions = {
           color: this.data.color,
-          transparent: true,
-          alphaTest: 0.5,
+          //transparent: true,
+          //alphaTest: 0.5,
           side: THREE.DoubleSide
         };
 
@@ -173,28 +173,43 @@
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd.gif'
     },
     {
       name: 'unicornsquare',
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_square.gif'
     },
     {
       name: 'unicornround',
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_round.gif'
     },
+    {
+      name: 'unicornsquare2',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicornhd_square2.gif'
+    },
+    {
+      name: 'unicornround2',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicornhd_round2.gif'
+    },
+
     {
       name: 'unicorndot',
       materialOptions: {
         type: 'flat'
       },
-      thumbnail: 'brushes/thumb_unicorn.gif'
+      thumbnail: 'brushes/thumb_unicornhd_dot.gif'
     }
   ];
 
