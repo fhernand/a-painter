@@ -190,6 +190,21 @@
       thumbnail: 'brushes/thumb_unicorn.gif'
     },
     {
+      name: 'unicornsquare2',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicorn.gif'
+    },
+    {
+      name: 'unicornround2',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicorn.gif'
+    },
+
+    {
       name: 'unicorndot',
       materialOptions: {
         type: 'flat'
