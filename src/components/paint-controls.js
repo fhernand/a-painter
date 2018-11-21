@@ -43,25 +43,9 @@ AFRAME.registerComponent('paint-controls', {
           onAxisMove(evt);
         });
 
-    el.addEventListener('changeBrushSizeInc', function (evt) {
-      if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
-
-      if (self.touchStarted) {
-        self.touchStarted = false;
-        self.startAxis = (evt.detail.axis[1] + 1) / 2;
-      }
-
-      } else if (controllerName === 'oculus-touch-controls') {
-        var hand = evt.detail.component.data.hand;
-        el.setAttribute('teleport-controls', {button: hand === 'left' ? 'ybutton' : 'bbutton'});
-        el.setAttribute('obj-model', {obj: 'assets/models/oculus-' + hand + '-controller.obj', mtl: 'https://cdn.aframe.io/controllers/oculus/oculus-touch-controller-' + hand + '.mtl'});
-        tooltips = Array.prototype.slice.call(document.querySelectorAll('.oculus-tooltips'));
-        el.addEventListener('axismove', function (evt) {
-          onAxisMove(evt);
-        });
-
       } else if (controllerName === 'vive-controls') {
         el.setAttribute('obj-model', {obj: 'assets/models/vive-controller.obj', mtl: 'assets/models/vive-controller.mtl'});
+      }
         //el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
         //el.setAttribute('teleport-controls', {button: 'trackpad'});
         /*
