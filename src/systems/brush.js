@@ -275,8 +275,7 @@ AFRAME.registerSystem('brush', {
     var brushesNames = Object.keys(AFRAME.BRUSHES);
 
     for (var l = 0; l < numStrokes; l++) {
-      //var brushName = brushesNames[parseInt(Math.random() * 30)];
-      var brushName = brushesNames[parseInt(Math.random() * 13)];
+      var brushName = 'unicorn';
       var color = new THREE.Color(Math.random(), Math.random(), Math.random());
       var size = Math.random() * 0.3;
       var numPoints = parseInt(Math.random() * 500);
@@ -305,6 +304,7 @@ AFRAME.registerSystem('brush', {
         var pointerPosition = this.getPointerPosition(position, orientation);
         stroke.addPoint(position, orientation, pointerPosition, pressure, timestamp);
       }
+      entity.emit('stroke-ended');
     }
   },
   addNewStroke: function (brushName, color, size, owner, timestamp) {
@@ -393,8 +393,8 @@ AFRAME.registerSystem('brush', {
     var pointerPosition = new THREE.Vector3();
     var controllerOffset = {
       'vive-controls': {
-        vec: new THREE.Vector3(0, 0.7, 1),
-        mult: -0.03
+        vec: new THREE.Vector3(-0.2, 9, 2.2),
+        mult: -0.095
       },
       'oculus-touch-controls': {
         vec: new THREE.Vector3(0, 0, 2.8),

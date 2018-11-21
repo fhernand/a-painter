@@ -20,8 +20,12 @@ AFRAME.registerComponent('brush', {
     this.strokeEntities = [];
 
     this.sizeModifier = 0.0;
+    this.sizepartition = 0;
+    this.oldsizepartition = 0;
     this.textures = {};
     this.currentMap = 0;
+
+    this.addedDeltas = 0;
 
     this.model = this.el.getObject3D('mesh');
     this.drawing = false;
@@ -43,24 +47,36 @@ AFRAME.registerComponent('brush', {
 */
     this.el.addEventListener('undo', function(evt) {
       if (!self.data.enabled) { return; }
-      self.system.undo();
-      document.getElementById('ui_undo').play();
+      // Grip
+      if (evt.detail.id === 2) {
+	self.el.sceneEl.systems.painter.toggleRefImages();
+        //self.system.undo();
+      }
     });
 
     this.el.addEventListener('paint', function (evt) {
       if (!self.data.enabled) { return; }
       // Trigger
-      var value = evt.detail.value;
-      self.sizeModifier = value;
-      if (value > 0.1) {
-        if (!self.active) {
-          self.startNewStroke();
-          self.active = true;
-        }
-      } else {
-        if (self.active) {
-          self.previousEntity = self.currentEntity;
-          self.currentStroke = null;
+      if (evt.detail.id === 1) {
+        var value = evt.detail.state.value;
+        self.sizeModifier = value;
+        if (value > 0.1) {
+          if (!self.active) {
+            self.startNewStroke();
+            self.active = true;
+          }
+	  self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0.06) + 1, 15);
+	  if(self.sizepartition != self.oldsizepartition){
+		  self.newLEDSize(self.sizepartition);
+		  self.oldsizepartition = self.sizepartition;
+	  }
+        } else {
+          if (self.active) {
+            self.previousEntity = self.currentEntity;
+            self.currentStroke = null;
+			self.endStroke();
+          }
+          self.active = false;
         }
         self.active = false;
       }
@@ -82,10 +98,12 @@ AFRAME.registerComponent('brush', {
     var scale = new THREE.Vector3();
 
     return function tick (time, delta) {
-      if (this.currentStroke && this.active) {
+      this.addedDeltas += delta;
+      if (this.addedDeltas > 100 && this.currentStroke && this.active) {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
         this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizeModifier, time);
+	this.addedDeltas = 0;
       }
     };
   })(),
@@ -93,5 +111,11 @@ AFRAME.registerComponent('brush', {
     document.getElementById('ui_paint').play();
     this.currentStroke = this.system.addNewStroke(this.data.brush, this.color, this.data.size);
     this.el.emit('stroke-started', {entity: this.el, stroke: this.currentStroke});
+  },
+  endStroke: function () {
+    this.el.emit('stroke-ended');
+  },
+  newLEDSize: function (LEDSize) {
+    this.el.emit('ledsize-changed', {ledsize: LEDSize});
   }
 });

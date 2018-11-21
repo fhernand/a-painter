@@ -46,11 +46,15 @@ window.addEventListener('load', function (event) {
           var objloader = new AFRAME.THREE.OBJLoader();
           var mesh = objloader.parse(event.target.result);
 
+          mesh.scale.set(0.02, 0.02, 0.02);
+          
           var entity = document.createElement('a-entity');
           // set all mesh objects to dark gray
           for (var o = 0; o < mesh.children.length; o++) {
             var child = mesh.children[o];
-            child.material.color.set('#333');
+            if (child.material.color){
+              child.material.color.set('#333');
+            }
           }
           // add mesh to entity
           entity.setObject3D('mesh', mesh);
@@ -69,16 +73,17 @@ window.addEventListener('load', function (event) {
           // find good image size
           var width, height;
           if (img.width > img.height) {
-            width = 1.0;
-            height = img.height / img.width;
+            width = Math.floor(img.width / 1024);
+            height = width * img.height / img.width;
           } else {
-            height = 1.0;
-            width = img.width / img.height;
+            height = Math.floor(img.height / 1024);
+            width = height * img.width / img.height;
           }
 
           // find a random position in a side of the room
-          var pos = [Math.random() * 3 - 1.5, 1 + Math.random() - 0.5, -1.4 + Math.random() * 0.2];
-
+          //var pos = [Math.random() * 3 - 1.5, 1 + Math.random() - 0.5, -1.4 + Math.random() * 0.2];
+          var pos = [0, 0.5 + height / 2, 0];
+          
           // create a-image entity and set attributes
           var entity = document.createElement('a-image');
           entity.setAttribute('src', event.target.result);
