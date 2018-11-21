@@ -4,7 +4,57 @@ var saveAs = require('../../vendor/saveas.js').saveAs;
 
 AFRAME.registerSystem('painter', {
   init: function () {
-    this.version = '1.1';
+
+    var mappings = {
+      behaviours: {},
+      mappings: {
+        painting: {
+          common: {
+            'grip.down': 'undo',
+            'trigger.changed': 'paint'
+          },
+
+          'vive-controls': {
+            'axis.move': 'changeBrushSizeInc',
+            'trackpad.touchstart': 'startChangeBrushSize',
+            'menu.down': 'toggleMenu',
+
+            // Teleport
+            'trackpad.down': 'aim',
+            'trackpad.up': 'teleport'
+          },
+
+          'oculus-touch-controls': {
+            'axis.move': 'changeBrushSizeAbs',
+            'abutton.down': 'toggleMenu',
+            'xbutton.down': 'toggleMenu',
+
+            // Teleport
+            'ybutton.down': 'aim',
+            'ybutton.up': 'teleport',
+
+            'bbutton.down': 'aim',
+            'bbutton.up': 'teleport'
+          },
+
+          'windows-motion-controls': {
+            'axis.move': 'changeBrushSizeAbs',
+            'menu.down': 'toggleMenu',
+
+            // Teleport
+            'trackpad.down': 'aim',
+            'trackpad.up': 'teleport'
+          },
+        }
+      }
+    };
+
+    this.sceneEl.addEventListener('loaded', function() {
+      AFRAME.registerInputMappings(mappings);
+      AFRAME.currentInputMapping = 'painting';
+    });
+
+    this.version = '1.2';
     this.brushSystem = this.sceneEl.systems.brush;
     this.showTemplateItems = true;
 
@@ -103,6 +153,12 @@ AFRAME.registerSystem('painter', {
           hand.setAttribute('brush', 'brush', brushesNames[index]);
         });
       }
+
+      if (event.keyCode === 84) {
+        // Random stroke (t)
+        self.brushSystem.generateTestLines();
+      }
+
       if (event.keyCode === 82) {
         // Random stroke (r)
         self.brushSystem.generateRandomStrokes(1);
@@ -122,6 +178,9 @@ AFRAME.registerSystem('painter', {
       }
       if (event.keyCode === 79) { // o - toggle template objects+images visibility
         self.toggleRefImages();
+      }
+      if (event.keyCode === 88) { // x remove 2nd
+        self.brushSystem.removeById(2);
       }
     });
 

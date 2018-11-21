@@ -43,11 +43,13 @@ AFRAME.registerComponent('paint-controls', {
           onAxisMove(evt);
         });
 
-        el.addEventListener('trackpadtouchstart', function () {
-          self.touchStarted = true;
-        });
+    el.addEventListener('changeBrushSizeInc', function (evt) {
+      if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
 
+      if (self.touchStarted) {
         self.touchStarted = false;
+        self.startAxis = (evt.detail.axis[1] + 1) / 2;
+      }
 
       } else if (controllerName === 'oculus-touch-controls') {
         var hand = evt.detail.component.data.hand;
@@ -72,26 +74,35 @@ AFRAME.registerComponent('paint-controls', {
             self.startAxis = (evt.detail.axis[1] + 1) / 2;
           }
 
-          var currentAxis = (evt.detail.axis[1] + 1) / 2;
-          var delta = (self.startAxis - currentAxis) / 2;
+      self.startAxis = currentAxis;
 
-          self.startAxis = currentAxis;
+      var startValue = self.el.getAttribute('brush').size;
+      var size = el.components.brush.schema.size;
+      var value = THREE.Math.clamp(startValue - delta, size.min, size.max);
 
-          var startValue = self.el.getAttribute('brush').size;
-          var size = el.components.brush.schema.size;
-          var value = THREE.Math.clamp(startValue - delta, size.min, size.max);
+      self.el.setAttribute('brush', 'size', value);
+    });
 
           self.el.setAttribute('brush', 'size', value);
         });
-        
 
-        el.addEventListener('trackpadtouchstart', function () {
-          self.touchStarted = true;
-        });
+
+    el.addEventListener('startChangeBrushSize', function () {
+      self.touchStarted = true;
+    });
 
         self.touchStarted = false;
       */
 
+      tooltips = Utils.getTooltips(controllerName);
+      if (controllerName.indexOf('windows-motion') >= 0) {
+        // el.setAttribute('teleport-controls', {button: 'trackpad'});
+      } else if (controllerName === 'oculus-touch-controls') {
+        var hand = evt.detail.component.data.hand;
+        //el.setAttribute('teleport-controls', {button: hand === 'left' ? 'ybutton' : 'bbutton'});
+        el.setAttribute('obj-model', {obj: 'assets/models/oculus-' + hand + '-controller.obj', mtl: 'https://cdn.aframe.io/controllers/oculus/oculus-touch-controller-' + hand + '.mtl'});
+      } else if (controllerName === 'vive-controls') {
+        el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
       } else { return; }
 
       /*
@@ -132,7 +143,7 @@ AFRAME.registerComponent('paint-controls', {
         var object = { opacity: 1.0 };
 
         var tween = new AFRAME.TWEEN.Tween(object)
-          .to({opacity: 0.0}, 4000)
+          .to({opacity: 0.0}, 1000)
           .onComplete(function () {
             tooltips.forEach(function (tooltip) {
               tooltip.setAttribute('visible', false);
@@ -148,7 +159,7 @@ AFRAME.registerComponent('paint-controls', {
       }
       */
     });
- 
+
   },
 
   changeBrushColor: function (color) {
@@ -196,9 +207,10 @@ AFRAME.registerComponent('paint-controls', {
   },
 
   onModelLoaded: function (evt) {
+    if (evt.target !== this.el) { return; }
+
     var controllerObject3D = evt.detail.model;
     var buttonMeshes;
-    if (evt.detail.target !== this.el) { return; }
 
     buttonMeshes = this.buttonMeshes = {};
 
