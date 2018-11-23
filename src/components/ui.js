@@ -946,7 +946,7 @@ AFRAME.registerComponent('ui', {
 
   playSound: function (sound, objName) {
     if (objName === undefined || !this.pressedObjects[objName]) {
-      document.getElementById(sound).play();
+      //document.getElementById(sound).play();
     }
   }
 });

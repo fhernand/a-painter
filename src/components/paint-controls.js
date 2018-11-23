@@ -78,6 +78,7 @@ AFRAME.registerComponent('paint-controls', {
         self.touchStarted = false;
       */
 
+	  /*
       tooltips = Utils.getTooltips(controllerName);
       if (controllerName.indexOf('windows-motion') >= 0) {
         // el.setAttribute('teleport-controls', {button: 'trackpad'});
@@ -88,7 +89,7 @@ AFRAME.registerComponent('paint-controls', {
       } else if (controllerName === 'vive-controls') {
         el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
       } else { return; }
-
+*/
       /*
       if (!!tooltips) {
         tooltips.forEach(function (tooltip) {
