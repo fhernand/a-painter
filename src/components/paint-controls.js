@@ -21,17 +21,15 @@ AFRAME.registerComponent('paint-controls', {
     this.onModelLoaded = this.onModelLoaded.bind(this);
     el.addEventListener('model-loaded', this.onModelLoaded);
 
-    /*
-    var onAxisMove = function(evt) {
-      if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
-
-      var delta = evt.detail.axis[1] / 300;
-      var size = el.components.brush.schema.size;
-      var value = THREE.Math.clamp(self.el.getAttribute('brush').size - delta, size.min, size.max);
-
-      self.el.setAttribute('brush', 'size', value);
-    }
-    */
+    // var onAxisMove = function(evt) {
+    //   if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
+    //
+    //   var delta = evt.detail.axis[1] / 300;
+    //   var size = el.components.brush.schema.size;
+    //   var value = THREE.Math.clamp(self.el.getAttribute('brush').size - delta, size.min, size.max);
+    //
+    //   self.el.setAttribute('brush', 'size', value);
+    // }
 
     el.addEventListener('controllerconnected', function (evt) {
       var controllerName = evt.detail.name;
@@ -48,55 +46,49 @@ AFRAME.registerComponent('paint-controls', {
       }
         //el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
         //el.setAttribute('teleport-controls', {button: 'trackpad'});
-        /*
-        tooltips = Array.prototype.slice.call(document.querySelectorAll('.vive-tooltips'));
-        el.addEventListener('axismove', function (evt) {
-          if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
+    //     tooltips = Array.prototype.slice.call(document.querySelectorAll('.vive-tooltips'));
+    //     el.addEventListener('axismove', function (evt) {
+    //       if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || self.previousAxis === evt.detail.axis[1]) { return; }
+    //
+    //       if (self.touchStarted) {
+    //         self.touchStarted = false;
+    //         self.startAxis = (evt.detail.axis[1] + 1) / 2;
+    //       }
+    //
+    //   self.startAxis = currentAxis;
+    //
+    //   var startValue = self.el.getAttribute('brush').size;
+    //   var size = el.components.brush.schema.size;
+    //   var value = THREE.Math.clamp(startValue - delta, size.min, size.max);
+    //
+    //   self.el.setAttribute('brush', 'size', value);
+    // });
+    //
+    //       self.el.setAttribute('brush', 'size', value);
+    //     });
+    //
+    //
+    // el.addEventListener('startChangeBrushSize', function () {
+    //   self.touchStarted = true;
+    // });
+    //
+    //     self.touchStarted = false;
 
-          if (self.touchStarted) {
-            self.touchStarted = false;
-            self.startAxis = (evt.detail.axis[1] + 1) / 2;
-          }
-
-      self.startAxis = currentAxis;
-
-      var startValue = self.el.getAttribute('brush').size;
-      var size = el.components.brush.schema.size;
-      var value = THREE.Math.clamp(startValue - delta, size.min, size.max);
-
-      self.el.setAttribute('brush', 'size', value);
-    });
-
-          self.el.setAttribute('brush', 'size', value);
-        });
-
-
-    el.addEventListener('startChangeBrushSize', function () {
-      self.touchStarted = true;
-    });
-
-        self.touchStarted = false;
-      */
-
-	  /*
-      tooltips = Utils.getTooltips(controllerName);
-      if (controllerName.indexOf('windows-motion') >= 0) {
-        // el.setAttribute('teleport-controls', {button: 'trackpad'});
-      } else if (controllerName === 'oculus-touch-controls') {
-        var hand = evt.detail.component.data.hand;
-        //el.setAttribute('teleport-controls', {button: hand === 'left' ? 'ybutton' : 'bbutton'});
-        el.setAttribute('obj-model', {obj: 'assets/models/oculus-' + hand + '-controller.obj', mtl: 'https://cdn.aframe.io/controllers/oculus/oculus-touch-controller-' + hand + '.mtl'});
-      } else if (controllerName === 'vive-controls') {
-        el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
-      } else { return; }
-*/
-      /*
-      if (!!tooltips) {
-        tooltips.forEach(function (tooltip) {
-          tooltip.setAttribute('visible', true);
-        });
-      }
-      */
+      // tooltips = Utils.getTooltips(controllerName);
+      // if (controllerName.indexOf('windows-motion') >= 0) {
+      //   // el.setAttribute('teleport-controls', {button: 'trackpad'});
+      // } else if (controllerName === 'oculus-touch-controls') {
+      //   var hand = evt.detail.component.data.hand;
+      //   //el.setAttribute('teleport-controls', {button: hand === 'left' ? 'ybutton' : 'bbutton'});
+      //   el.setAttribute('obj-model', {obj: 'assets/models/oculus-' + hand + '-controller.obj', mtl: 'https://cdn.aframe.io/controllers/oculus/oculus-touch-controller-' + hand + '.mtl'});
+      // } else if (controllerName === 'vive-controls') {
+      //   el.setAttribute('json-model', {src: 'assets/models/controller_vive.json'});
+      // } else { return; }
+      // if (!!tooltips) {
+      //   tooltips.forEach(function (tooltip) {
+      //     tooltip.setAttribute('visible', true);
+      //   });
+      // }
 
       this.controller = controllerName;
     });
@@ -121,28 +113,26 @@ AFRAME.registerComponent('paint-controls', {
       self.numberStrokes++;
       self.system.numberStrokes++;
 
-      /*
       // 3 Strokes to hide
-      if (self.system.numberStrokes === 3) {
-        var tooltips = Array.prototype.slice.call(document.querySelectorAll('[tooltip]'));
-        var object = { opacity: 1.0 };
-
-        var tween = new AFRAME.TWEEN.Tween(object)
-          .to({opacity: 0.0}, 1000)
-          .onComplete(function () {
-            tooltips.forEach(function (tooltip) {
-              tooltip.setAttribute('visible', false);
-            });
-          })
-          .delay(2000)
-          .onUpdate(function () {
-            tooltips.forEach(function (tooltip) {
-              tooltip.setAttribute('tooltip', {opacity: object.opacity});
-            });
-          });
-        tween.start();
-      }
-      */
+      // if (self.system.numberStrokes === 3) {
+      //   var tooltips = Array.prototype.slice.call(document.querySelectorAll('[tooltip]'));
+      //   var object = { opacity: 1.0 };
+      //
+      //   var tween = new AFRAME.TWEEN.Tween(object)
+      //     .to({opacity: 0.0}, 1000)
+      //     .onComplete(function () {
+      //       tooltips.forEach(function (tooltip) {
+      //         tooltip.setAttribute('visible', false);
+      //       });
+      //     })
+      //     .delay(2000)
+      //     .onUpdate(function () {
+      //       tooltips.forEach(function (tooltip) {
+      //         tooltip.setAttribute('tooltip', {opacity: object.opacity});
+      //       });
+      //     });
+      //   tween.start();
+      // }
     });
 
   },

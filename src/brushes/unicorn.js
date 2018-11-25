@@ -32,7 +32,6 @@ var onLoaded = require('../onloaded.js');
     undo: function () {
       this.sharedBuffer.undo(this.prevIdx);
     },
-
     addPoint: (function () {
       var direction = new THREE.Vector3();
 
@@ -81,6 +80,81 @@ var onLoaded = require('../onloaded.js');
 
     })(),
 
+    computeStripVertexNormals: (function () {
+      var pA = new THREE.Vector3();
+      var pB = new THREE.Vector3();
+      var pC = new THREE.Vector3();
+      var cb = new THREE.Vector3();
+      var ab = new THREE.Vector3();
+
+      return function () {
+        var start = this.prevIdx.position === 0 ? 0 : (this.prevIdx.position + 1) * 3;
+        var end = (this.idx.position) * 3;
+        var vertices = this.sharedBuffer.current.attributes.position.array;
+        var normals = this.sharedBuffer.current.attributes.normal.array;
+
+        for (var i = start; i <= end; i++) {
+          normals[i] = 0;
+        }
+
+        var pair = true;
+        for (i = start; i < end - 6; i += 3) {
+          if (pair) {
+            pA.fromArray(vertices, i);
+            pB.fromArray(vertices, i + 3);
+            pC.fromArray(vertices, i + 6);
+          } else {
+            pB.fromArray(vertices, i);
+            pC.fromArray(vertices, i + 6);
+            pA.fromArray(vertices, i + 3);
+          }
+          pair = !pair;
+
+          cb.subVectors(pC, pB);
+          ab.subVectors(pA, pB);
+          cb.cross(ab);
+          cb.normalize();
+
+          normals[i] += cb.x;
+          normals[i + 1] += cb.y;
+          normals[i + 2] += cb.z;
+
+          normals[i + 3] += cb.x;
+          normals[i + 4] += cb.y;
+          normals[i + 5] += cb.z;
+
+          normals[i + 6] += cb.x;
+          normals[i + 7] += cb.y;
+          normals[i + 8] += cb.z;
+        }
+
+        /*
+        first and last vertice (0 and 8) belongs just to one triangle
+        second and penultimate (1 and 7) belongs to two triangles
+        the rest of the vertices belongs to three triangles
+
+          1_____3_____5_____7
+          /\    /\    /\    /\
+         /  \  /  \  /  \  /  \
+        /____\/____\/____\/____\
+        0    2     4     6     8
+        */
+
+        // Vertices that are shared across three triangles
+        for (i = start + 2 * 3; i < end - 2 * 3; i++) {
+          normals[i] = normals[i] / 3;
+        }
+
+        // Second and penultimate triangle, that shares just two triangles
+        normals[start + 3] = normals[start + 3] / 2;
+        normals[start + 3 + 1] = normals[start + 3 + 1] / 2;
+        normals[start + 3 + 2] = normals[start + 3 * 1 + 2] / 2;
+
+        normals[end - 2 * 3] = normals[end - 2 * 3] / 2;
+        normals[end - 2 * 3 + 1] = normals[end - 2 * 3 + 1] / 2;
+        normals[end - 2 * 3 + 2] = normals[end - 2 * 3 + 2] / 2;
+      };
+    })()
   };
 
   var lines = [

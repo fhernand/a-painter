@@ -26,88 +26,85 @@ AFRAME.registerComponent('brush', {
     this.currentMap = 0;
 
     this.addedDeltas = 0;
-	  
+
     this.model = this.el.getObject3D('mesh');
     this.drawing = false;
 
     var self = this;
 
     this.previousAxis = 0;
-/*
-    this.el.addEventListener('axismove', function (evt) {
-      if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || this.previousAxis === evt.detail.axis[1]) {
-        return;
-      }
 
-      this.previousAxis = evt.detail.axis[1];
-      var size = (evt.detail.axis[1] + 1) / 2 * self.schema.size.max;
+    // this.el.addEventListener('axismove', function (evt) {
+    //   if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || this.previousAxis === evt.detail.axis[1]) {
+    //     return;
+    //   }
+    //
+    //   this.previousAxis = evt.detail.axis[1];
+    //   var size = (evt.detail.axis[1] + 1) / 2 * self.schema.size.max;
+    //
+    //   self.el.setAttribute('brush', 'size', size);
+    // });
 
-      self.el.setAttribute('brush', 'size', size);
-    });
-*/
     this.el.addEventListener('buttondown', function (evt) {
       if (!self.data.enabled) { return; }
       // Grip
       if (evt.detail.id === 2) {
-	self.el.sceneEl.systems.painter.toggleRefImages();
+	        self.el.sceneEl.systems.painter.toggleRefImages();
         //self.system.undo();
       }
     });
 
-	
 	this.el.addEventListener('paint', function (evt) {
       if (!self.data.enabled) { return; }
-      // Trigger
-      var value = evt.detail.value;
-      self.sizeModifier = value;
-      if (value > 0.1) {
-        if (!self.active) {
-          self.startNewStroke();
-          self.active = true;
-        }
-		self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0.06) + 1, 15);
-		if(self.sizepartition != self.oldsizepartition){
-		  self.newLEDSize(self.sizepartition);
-		  self.oldsizepartition = self.sizepartition;
-		}
-      } else {
-        if (self.active) {
-          self.previousEntity = self.currentEntity;
-          self.currentStroke = null;
-		  self.endStroke();
-        }
-        self.active = false;
-      }
-    });
-	
-    /*
-	this.el.addEventListener('buttonchanged', function (evt) {
-      if (!self.data.enabled) { return; }
-      // Trigger
-      if (evt.detail.id === 1) {
-        var value = evt.detail.state.value;
+        // Trigger
+        var value = evt.detail.value;
         self.sizeModifier = value;
         if (value > 0.1) {
           if (!self.active) {
             self.startNewStroke();
             self.active = true;
-          }
-	  self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0.06) + 1, 15);
-	  if(self.sizepartition != self.oldsizepartition){
-		  self.newLEDSize(self.sizepartition);
-		  self.oldsizepartition = self.sizepartition;
-	  }
-        } else {
-          if (self.active) {
-            self.previousEntity = self.currentEntity;
-            self.currentStroke = null;
-			self.endStroke();
-          }
-          self.active = false;
         }
+    		self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0.06) + 1, 15);
+    		if(self.sizepartition != self.oldsizepartition){
+    		  self.newLEDSize(self.sizepartition);
+    		  self.oldsizepartition = self.sizepartition;
+    		}
+      } else {
+        if (self.active) {
+          self.previousEntity = self.currentEntity;
+          self.currentStroke = null;
+		      self.endStroke();
+        }
+        self.active = false;
       }
     });
-	*/
+
+	// this.el.addEventListener('buttonchanged', function (evt) {
+  //     if (!self.data.enabled) { return; }
+  //     // Trigger
+  //     if (evt.detail.id === 1) {
+  //       var value = evt.detail.state.value;
+  //       self.sizeModifier = value;
+  //       if (value > 0.1) {
+  //         if (!self.active) {
+  //           self.startNewStroke();
+  //           self.active = true;
+  //         }
+	//   self.sizepartition = Math.min(Math.floor((self.sizeModifier-0.1)/0.06) + 1, 15);
+	//   if(self.sizepartition != self.oldsizepartition){
+	// 	  self.newLEDSize(self.sizepartition);
+	// 	  self.oldsizepartition = self.sizepartition;
+	//   }
+  //       } else {
+  //         if (self.active) {
+  //           self.previousEntity = self.currentEntity;
+  //           self.currentStroke = null;
+	// 		self.endStroke();
+  //         }
+  //         self.active = false;
+  //       }
+  //     }
+  //   });
   },
   update: function (oldData) {
     var data = this.data;
@@ -130,7 +127,7 @@ AFRAME.registerComponent('brush', {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
         this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizeModifier, time);
-	this.addedDeltas = 0;
+	      this.addedDeltas = 0;
       }
     };
   })(),
