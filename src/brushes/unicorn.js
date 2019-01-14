@@ -166,6 +166,13 @@ var onLoaded = require('../onloaded.js');
       thumbnail: 'brushes/thumb_unicornhd.gif'
     },
     {
+      name: 'unicornhat',
+      materialOptions: {
+        type: 'flat'
+      },
+      thumbnail: 'brushes/thumb_unicornhat.gif'
+    },
+    {
       name: 'unicornsquare',
       materialOptions: {
         type: 'flat'
