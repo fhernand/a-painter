@@ -44,7 +44,7 @@ var onLoaded = require('../onloaded.js');
 
         var posA = pointerPosition.clone();
         var posB = pointerPosition.clone();
-        var brushSize = this.data.size * pressure;
+        var brushSize = 0.05 * pressure;//this.data.size * pressure;
         posA.add(direction.clone().multiplyScalar(brushSize / 2));
         posB.add(direction.clone().multiplyScalar(-brushSize / 2));
 
@@ -164,13 +164,6 @@ var onLoaded = require('../onloaded.js');
         type: 'flat'
       },
       thumbnail: 'brushes/thumb_unicornhd.gif'
-    },
-    {
-      name: 'unicornhat',
-      materialOptions: {
-        type: 'flat'
-      },
-      thumbnail: 'brushes/thumb_unicornhat.gif'
     },
     {
       name: 'unicornsquare',

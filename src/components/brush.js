@@ -12,6 +12,7 @@ AFRAME.registerComponent('brush', {
 
     this.el.emit('brushcolor-changed', {color: this.color});
     this.el.emit('brushsize-changed', {brushSize: data.size});
+	this.el.emit('brightness-changed', {brightness: data.size});
 
     this.active = false;
     this.obj = this.el.object3D;
@@ -114,6 +115,7 @@ AFRAME.registerComponent('brush', {
     }
     if (oldData.size !== data.size) {
       this.el.emit('brushsize-changed', {size: data.size});
+	  this.el.emit('brightness-changed', {size: data.size});
     }
   },
   tick: (function () {
