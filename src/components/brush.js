@@ -3,7 +3,7 @@ AFRAME.registerComponent('brush', {
   schema: {
     color: {type: 'color', default: '#ef2d5e'},
     size: {default: 0.01, min: 0.001, max: 0.3},
-    brush: {default: 'flat'},
+    brush: {default: 'unicorn'},
     enabled: { default: true }
   },
   init: function () {
@@ -115,7 +115,7 @@ AFRAME.registerComponent('brush', {
     }
     if (oldData.size !== data.size) {
       this.el.emit('brushsize-changed', {size: data.size});
-	  this.el.emit('brightness-changed', {size: data.size});
+	  this.el.emit('brightness-changed', {brightness: data.size});
     }
   },
   tick: (function () {
