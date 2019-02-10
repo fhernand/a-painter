@@ -44,7 +44,7 @@ var onLoaded = require('../onloaded.js');
 
         var posA = pointerPosition.clone();
         var posB = pointerPosition.clone();
-        var brushSize = 0.05 * pressure;//this.data.size * pressure;
+        var brushSize = 0.06 * pressure;//this.data.size * pressure;
         posA.add(direction.clone().multiplyScalar(brushSize / 2));
         posB.add(direction.clone().multiplyScalar(-brushSize / 2));
 

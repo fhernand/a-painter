@@ -2,7 +2,7 @@
 AFRAME.registerComponent('brush', {
   schema: {
     color: {type: 'color', default: '#ef2d5e'},
-    size: {default: 0.48, min: 1, max: 255},
+    size: {default: 48, min: 1, max: 255},
     brush: {default: 'unicorn'},
     enabled: { default: true }
   },
