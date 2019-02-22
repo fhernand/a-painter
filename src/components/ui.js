@@ -7,6 +7,7 @@ AFRAME.registerComponent('ui', {
     var el = this.el;
     var uiEl = this.uiEl = document.createElement('a-entity');
     var rayEl = this.rayEl = document.createElement('a-entity');
+    var textEl = this.textEl = document.createElement('a-entity');
     this.closed = true;
     this.isTooltipPaused = false;
     this.colorStack = ['#272727', '#727272', '#FFFFFF', '#24CAFF', '#249F90', '#F2E646', '#EF2D5E'];
@@ -59,6 +60,10 @@ AFRAME.registerComponent('ui', {
       objects: '.apainter-ui',
       rotation: -this.rayAngle
     });
+
+    //Text element setup
+    textEl.setAttribute('value', 'LED brightness');
+    uiEl.appendChild(textEl);
 
     this.controller = null;
 
@@ -387,6 +392,8 @@ AFRAME.registerComponent('ui', {
   },
 
   onBrushSizeBackgroundDown: function (position) {
+    var textEl = this.textEl;
+    var gammaCorrection = this.gammaCorrection;
     var slider = this.objects.sizeSlider;
     var sliderBoundingBox = slider.geometry.boundingBox;
     var sliderWidth = sliderBoundingBox.max.x - sliderBoundingBox.min.x;
@@ -394,7 +401,10 @@ AFRAME.registerComponent('ui', {
     slider.worldToLocal(position);
     var brushSize = (position.x - sliderBoundingBox.min.x) / sliderWidth;
     brushSize = brushSize * AFRAME.components.brush.schema.size.max;
+    var clampedBrushSize = THREE.Math.clamp(brushSize, 0, AFRAME.components.brush.schema.size.max);
+    var correctedBrushSize = gammaCorrection[clampedBrushSize];
     this.handEl.setAttribute('brush', 'size', brushSize);
+    textEl.setAttribute('value', correctedBrushSize)
     this.playSound('ui_click0', 'sizebg');
   },
 
