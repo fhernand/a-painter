@@ -70,7 +70,7 @@ AFRAME.registerComponent('brush', {
   this.sizeFifteen  = ['1','2','3','3','3','3','2','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','2','3','3','3','3','2','1'];
 
   this.brushSizes 	= [this.sizeZero,this.sizeOne, this.sizeTwo, this.sizeThree,this.sizeFour, this.sizeFive, this.sizeSix, this.sizeSeven, this.sizeEight, this.sizeNine, this.sizeTen, this.sizeEleven, this.sizeTwelve, this.sizeThirteen, this.sizeFourteen, this.sizeFifteen];
-  this brushSize = this.sizeZero;
+  this.brushSize = this.sizeZero;
     // this.el.addEventListener('axismove', function (evt) {
     //   if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || this.previousAxis === evt.detail.axis[1]) {
     //     return;
