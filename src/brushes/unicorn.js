@@ -61,52 +61,58 @@ var onLoaded = require('../onloaded.js');
         var converter = this.materialOptions.converter;
 
         this.brushSize = this.brushSizes[pressure];
-        direction.set(1, 0, 0);
-        direction.applyQuaternion(orientation);
-        direction.normalize();
+        directionx.set(1, 0, 0);
+        directionx.applyQuaternion(orientation);
+        directionx.normalize();
+
+        directiony.set(0, 1, 0);
+        directiony.applyQuaternion(orientation);
+        directiony.normalize();
 
         for (i = 0; i < 8; i++) {
+          pointerPosition.add(directiony.clone().multiplyScalar(0.5));
           for (j = 0; j < 8; j++) {
+            pointerPosition.add(directionx.clone().multiplyScalar(0.5));
             if (this.brushSize[(i*8)+j] != 0){
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
-            pointerPosition.add(direction.clone().multiplyScalar(0.1));
-        var posA = pointerPosition.clone();
-        var posB = pointerPosition.clone();
-        var brushSize = 0.1; // * pressure;//this.data.size * pressure;
-        posA.add(direction.clone().multiplyScalar(brushSize / 2));
-        posB.add(direction.clone().multiplyScalar(-brushSize / 2));
 
-        if (this.first && this.prevIdx.position > 0) {
-          // Degenerated triangle
-          this.first = false;
-          this.sharedBuffer.addVertex(posA.x, posA.y, posA.z);
-          this.sharedBuffer.idx.normal++;
-          this.sharedBuffer.idx.color++;
-          this.sharedBuffer.idx.uv++;
+            var posA = pointerPosition.clone();
+            var posB = pointerPosition.clone();
+            var brushSize = 0.1; // * pressure;//this.data.size * pressure;
+            posA.add(directionx.clone().multiplyScalar(brushSize / 2));
+            posB.add(directionx.clone().multiplyScalar(-brushSize / 2));
 
-          this.idx = Object.assign({}, this.sharedBuffer.idx);
+            if (this.first && this.prevIdx.position > 0) {
+              // Degenerated triangle
+              this.first = false;
+              this.sharedBuffer.addVertex(posA.x, posA.y, posA.z);
+              this.sharedBuffer.idx.normal++;
+              this.sharedBuffer.idx.color++;
+              this.sharedBuffer.idx.uv++;
+
+              this.idx = Object.assign({}, this.sharedBuffer.idx);
+            }
+
+              /*
+                2---3
+                | \ |
+                0---1
+              */
+              this.sharedBuffer.addVertex(posA.x, posA.y, posA.z);
+              this.sharedBuffer.addVertex(posB.x, posB.y, posB.z);
+              this.sharedBuffer.idx.normal += 2;
+
+              this.sharedBuffer.addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+              this.sharedBuffer.addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+
+              this.idx = Object.assign({}, this.sharedBuffer.idx);
+
+              this.sharedBuffer.update();
+              //this.computeStripVertexNormals();
+            }
+          }
         }
-
-        /*
-          2---3
-          | \ |
-          0---1
-        */
-        this.sharedBuffer.addVertex(posA.x, posA.y, posA.z);
-        this.sharedBuffer.addVertex(posB.x, posB.y, posB.z);
-        this.sharedBuffer.idx.normal += 2;
-
-        this.sharedBuffer.addColor(this.data.color.r, this.data.color.g, this.data.color.b);
-        this.sharedBuffer.addColor(this.data.color.r, this.data.color.g, this.data.color.b);
-
-        this.idx = Object.assign({}, this.sharedBuffer.idx);
-
-        this.sharedBuffer.update();
-        //this.computeStripVertexNormals();
-      }
-    }
-  }
         return true;
       };
 

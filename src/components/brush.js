@@ -86,7 +86,6 @@ AFRAME.registerComponent('brush', {
     		if(self.sizepartition != self.oldsizepartition){
     		  self.newLEDSize(self.sizepartition);
     		  self.oldsizepartition = self.sizepartition;
-          self.brushSize = self.brushSizes[self.sizepartition];
     		}
       } else {
         if (self.active) {
