@@ -147,14 +147,8 @@ AFRAME.registerComponent('brush', {
 	  if (this.currentStroke && this.active) {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
-        //self.sizepartition
-
-            this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizeModifier, time);
-            }
-          }
-        }
-    }
-
+        this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizepartition, time);
+      }
       //this.addedDeltas += delta;
       //if (this.addedDeltas > 100 && this.currentStroke && this.active) {
       //  this.obj.matrixWorld.decompose(position, rotation, scale);
