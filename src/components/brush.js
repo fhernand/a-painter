@@ -160,7 +160,7 @@ AFRAME.registerComponent('brush', {
     var position = new THREE.Vector3();
     var rotation = new THREE.Quaternion();
     var scale = new THREE.Vector3();
-    var brushsizes = this.brushSizes[self.sizepartition];
+    var brushsizes = this.brushSizes[this.sizepartition];
 
     return function tick (time, delta) {
 	  if (this.currentStroke && this.active) {
