@@ -70,7 +70,7 @@ AFRAME.registerComponent('brush', {
   this.sizeFifteen  = ['1','2','3','3','3','3','2','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','2','3','3','3','3','2','1'];
 
   this.brushSizes 	= [this.sizeZero,this.sizeOne, this.sizeTwo, this.sizeThree,this.sizeFour, this.sizeFive, this.sizeSix, this.sizeSeven, this.sizeEight, this.sizeNine, this.sizeTen, this.sizeEleven, this.sizeTwelve, this.sizeThirteen, this.sizeFourteen, this.sizeFifteen];
-
+  this brushSize = this.sizeZero;
     // this.el.addEventListener('axismove', function (evt) {
     //   if (evt.detail.axis[0] === 0 && evt.detail.axis[1] === 0 || this.previousAxis === evt.detail.axis[1]) {
     //     return;
@@ -105,6 +105,7 @@ AFRAME.registerComponent('brush', {
     		if(self.sizepartition != self.oldsizepartition){
     		  self.newLEDSize(self.sizepartition);
     		  self.oldsizepartition = self.sizepartition;
+          self.brushSize = self.brushSizes[self.sizepartition];
     		}
       } else {
         if (self.active) {
@@ -160,7 +161,6 @@ AFRAME.registerComponent('brush', {
     var position = new THREE.Vector3();
     var rotation = new THREE.Quaternion();
     var scale = new THREE.Vector3();
-    var brushsizes = this.brushSizes[this.sizepartition];
 
     return function tick (time, delta) {
 	  if (this.currentStroke && this.active) {
@@ -169,8 +169,10 @@ AFRAME.registerComponent('brush', {
         //self.sizepartition
         for (i = 0; i < 8; i++) {
           for (j = 0; j < 8; j++) {
+            if (this.brushSize[(i*8)+j] != 0){
             var offsetPosition = new Three.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
             this.currentStroke.addPoint(position + offsetPosition, rotation, pointerPosition, this.sizeModifier, time);
+            }
           }
         }
     }
