@@ -47,11 +47,13 @@
                     </a-entity> -->
 
       <a-entity id="sky" geometry="primitive:sphere; radius:30; phiLength:360; phiStart:0; thetaLength:90" material="shader:flat; side:back; height:2048; src:#skymap; width:2048"></a-entity>
-      <a-entity id="drawcamera" position="0 0 0" rotation="-90 90 0"
-              grabbable="startButtons: gripdown; endButtons: gripup">
+      <a-entity id="drawcamera" position="0 0 0" rotation="-90 90 0">
         <a-cone color="brown" radius-bottom=".2" radius-top=".05" height=".5"
            rotation="90 0 0">
         </a-cone>
+        <a-entity geometry="primitive:plane; width:.2; height:.15"
+                            material="src:#drawcam; opacity: .8" canvas-updater
+                            position="-.2 -.15 -.3" rotation="0 0 0"></a-entity>
         <a-entity camera="active: false" camrender="cid: drawcam"></a-entity>
       </a-entity>
 
@@ -70,9 +72,7 @@
       <a-entity id="cameraRig">
         <!-- camera -->
         <a-entity id="acamera" camera wasd-controls look-controls>
-                                        <a-entity geometry="primitive:plane; width:.2; height:.15"
-                                                            material="src:#drawcam; opacity: .8" canvas-updater
-                                                            position="-.2 -.15 -.3" rotation="0 0 0"></a-entity>
+
         </a-entity>
 
         <!-- hand controls -->

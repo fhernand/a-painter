@@ -170,7 +170,7 @@ AFRAME.registerComponent('brush', {
         for (i = 0; i < 8; i++) {
           for (j = 0; j < 8; j++) {
             if (this.brushSize[(i*8)+j] != 0){
-            var offsetPosition = new Three.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
+            var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
             this.currentStroke.addPoint(position + offsetPosition, rotation, pointerPosition, this.sizeModifier, time);
             }
           }
