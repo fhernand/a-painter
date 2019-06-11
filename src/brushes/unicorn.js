@@ -3,8 +3,35 @@ var sharedBufferGeometryManager = require('../sharedbuffergeometrymanager.js');
 var onLoaded = require('../onloaded.js');
 
 (function () {
-
+    const BUFFERSIZEX = 2;
+    const BUFFERSIZEY = 2;
     var geometryManager = null;
+
+    this.sizeZero     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeOne      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeTwo      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeThree    = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','3','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeFour     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','0','0','0','0','0','0','3','3','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeFive     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','1','0','0','0','0','0','1','3','3','1','0','0','0','0','1','3','3','1','0','0','0','0','0','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeSix      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','2','1','0','0','0','0','2','3','3','2','0','0','0','0','2','3','3','2','0','0','0','0','1','2','2','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeSeven    = ['0','0','0','0','0','0','0','0','0','0','0','1','1','0','0','0','0','0','1','3','3','1','0','0','0','1','3','3','3','3','1','0','0','1','3','3','3','3','1','0','0','0','1','3','3','1','0','0','0','0','0','1','1','0','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeEight    = ['0','0','0','0','0','0','0','0','0','0','1','1','1','1','0','0','0','1','2','3','3','2','1','0','0','1','3','3','3','3','1','0','0','1','3','3','3','3','1','0','0','1','2','3','3','2','1','0','0','0','1','1','1','1','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeNine     = ['0','0','0','0','0','0','0','0','0','0','1','2','2','1','0','0','0','1','2','3','3','2','1','0','0','2','3','3','3','3','2','0','0','2','3','3','3','3','2','0','0','1','2','3','3','2','1','0','0','0','1','2','2','1','0','0','0','0','0','0','0','0','0','0'];
+    this.sizeTen      = ['0','0','0','0','0','0','0','0','0','1','2','3','3','2','1','0','0','2','3','3','3','3','2','0','0','3','3','3','3','3','3','0','0','3','3','3','3','3','3','0','0','2','3','3','3','3','2','0','0','1','2','3','3','2','1','0','0','0','0','0','0','0','0','0'];
+    this.sizeEleven   = ['0','0','1','1','1','1','0','0','0','2','2','3','3','2','2','0','1','2','3','3','3','3','2','1','1','3','3','3','3','3','3','1','1','3','3','3','3','3','3','1','1','2','3','3','3','3','2','1','0','2','2','3','3','2','2','0','0','0','1','1','1','1','0','0'];
+    this.sizeTwelve   = ['0','0','1','2','2','1','0','0','0','2','3','3','3','3','2','0','1','3','3','3','3','3','3','1','2','3','3','3','3','3','3','2','2','3','3','3','3','3','3','2','1','3','3','3','3','3','3','1','0','2','3','3','3','3','2','0','0','0','1','2','2','1','0','0'];
+    this.sizeThirteen = ['0','1','2','3','3','2','1','0','1','3','3','3','3','3','3','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','3','3','3','3','3','3','1','0','1','2','3','3','2','1','0'];
+    this.sizeFourteen = ['0','1','3','3','3','3','1','0','1','3','3','3','3','3','3','1','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','1','3','3','3','3','3','3','1','0','1','3','3','3','3','1','0'];
+    this.sizeFifteen  = ['1','2','3','3','3','3','2','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','2','3','3','3','3','2','1'];
+
+    this.brushSizes 	= [this.sizeZero,this.sizeOne, this.sizeTwo, this.sizeThree,this.sizeFour, this.sizeFive, this.sizeSix, this.sizeSeven, this.sizeEight, this.sizeNine, this.sizeTen, this.sizeEleven, this.sizeTwelve, this.sizeThirteen, this.sizeFourteen, this.sizeFifteen];
+    this.brushSize = this.sizeZero;
+
+
+    this.sharedBuffer = new Array(BUFFERSIZEX*BUFFERSIZEY);
+    this.prevIdx = new Array(BUFFERSIZEX*BUFFERSIZEY);
+    this.idx = new Array(BUFFERSIZEX*BUFFERSIZEY);
+    this.first = new Array(BUFFERSIZEX*BUFFERSIZEY);
 
     onLoaded(function () {
       var optionsBasic = {
@@ -12,47 +39,34 @@ var onLoaded = require('../onloaded.js');
         side: THREE.DoubleSide
       };
 
-      sharedBufferGeometryManager.addSharedBuffer('strip-flat', new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
+      for (i=0, i<(BUFFERSIZEX*BUFFERSIZEY)+1, i++){
+        this.sharedBuffer[i] = sharedBufferGeometryManager.addSharedBuffer('strip-' + i, new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
+      }
     });
 
   var line = {
 
     init: function (color, brushSize) {
-      this.sharedBuffer = sharedBufferGeometryManager.getSharedBuffer('strip-' + this.materialOptions.type);
-      this.sharedBuffer.restartPrimitive();
 
-      this.prevIdx = Object.assign({}, this.sharedBuffer.idx);
-      this.idx = Object.assign({}, this.sharedBuffer.idx);
+      for (i=0, i<(BUFFERSIZEX*BUFFERSIZEY)+1, i++){
+        this.sharedBuffer[i] = sharedBufferGeometryManager.getSharedBuffer('strip-' + i);
+        this.sharedBuffer[i].restartPrimitive();
 
-      this.first = true;
+        this.prevIdx[i] = Object.assign({}, this.sharedBuffer[i].idx);
+        this.idx[i] = Object.assign({}, this.sharedBuffer[i].idx);
 
-
-        this.sizeZero     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeOne      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeTwo      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeThree    = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','3','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeFour     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','0','0','0','0','0','0','3','3','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeFive     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','1','0','0','0','0','0','1','3','3','1','0','0','0','0','1','3','3','1','0','0','0','0','0','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeSix      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','2','1','0','0','0','0','2','3','3','2','0','0','0','0','2','3','3','2','0','0','0','0','1','2','2','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeSeven    = ['0','0','0','0','0','0','0','0','0','0','0','1','1','0','0','0','0','0','1','3','3','1','0','0','0','1','3','3','3','3','1','0','0','1','3','3','3','3','1','0','0','0','1','3','3','1','0','0','0','0','0','1','1','0','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeEight    = ['0','0','0','0','0','0','0','0','0','0','1','1','1','1','0','0','0','1','2','3','3','2','1','0','0','1','3','3','3','3','1','0','0','1','3','3','3','3','1','0','0','1','2','3','3','2','1','0','0','0','1','1','1','1','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeNine     = ['0','0','0','0','0','0','0','0','0','0','1','2','2','1','0','0','0','1','2','3','3','2','1','0','0','2','3','3','3','3','2','0','0','2','3','3','3','3','2','0','0','1','2','3','3','2','1','0','0','0','1','2','2','1','0','0','0','0','0','0','0','0','0','0'];
-        this.sizeTen      = ['0','0','0','0','0','0','0','0','0','1','2','3','3','2','1','0','0','2','3','3','3','3','2','0','0','3','3','3','3','3','3','0','0','3','3','3','3','3','3','0','0','2','3','3','3','3','2','0','0','1','2','3','3','2','1','0','0','0','0','0','0','0','0','0'];
-        this.sizeEleven   = ['0','0','1','1','1','1','0','0','0','2','2','3','3','2','2','0','1','2','3','3','3','3','2','1','1','3','3','3','3','3','3','1','1','3','3','3','3','3','3','1','1','2','3','3','3','3','2','1','0','2','2','3','3','2','2','0','0','0','1','1','1','1','0','0'];
-        this.sizeTwelve   = ['0','0','1','2','2','1','0','0','0','2','3','3','3','3','2','0','1','3','3','3','3','3','3','1','2','3','3','3','3','3','3','2','2','3','3','3','3','3','3','2','1','3','3','3','3','3','3','1','0','2','3','3','3','3','2','0','0','0','1','2','2','1','0','0'];
-        this.sizeThirteen = ['0','1','2','3','3','2','1','0','1','3','3','3','3','3','3','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','3','3','3','3','3','3','1','0','1','2','3','3','2','1','0'];
-        this.sizeFourteen = ['0','1','3','3','3','3','1','0','1','3','3','3','3','3','3','1','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','1','3','3','3','3','3','3','1','0','1','3','3','3','3','1','0'];
-        this.sizeFifteen  = ['1','2','3','3','3','3','2','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','2','3','3','3','3','2','1'];
-
-        this.brushSizes 	= [this.sizeZero,this.sizeOne, this.sizeTwo, this.sizeThree,this.sizeFour, this.sizeFive, this.sizeSix, this.sizeSeven, this.sizeEight, this.sizeNine, this.sizeTen, this.sizeEleven, this.sizeTwelve, this.sizeThirteen, this.sizeFourteen, this.sizeFifteen];
-        this.brushSize = this.sizeZero;
-
+        this.first[i] = true;
+      }
     },
     remove: function () {
-      this.sharedBuffer.remove(this.prevIdx, this.idx);
+      for (i=0, i<(BUFFERSIZEX*BUFFERSIZEY)+1, i++){
+        this.sharedBuffer[i].remove(this.prevIdx[i], this.idx[i]);
+      }
     },
     undo: function () {
-      this.sharedBuffer.undo(this.prevIdx);
+      for (i=0, i<(BUFFERSIZEX*BUFFERSIZEY)+1, i++){
+        this.sharedBuffer[i].undo(this.prevIdx[i]);
+      }
     },
     addPoint: (function () {
       var direction = new THREE.Vector3();
@@ -67,19 +81,19 @@ var onLoaded = require('../onloaded.js');
         directionx.applyQuaternion(orientation);
         //directionx.normalize();
 
-        directiony.set(0.1, 1, 0);
+        directiony.set(0, 0.1, 0);
         directiony.applyQuaternion(orientation);
         //directiony.normalize();
 
-        direction.set(1, 1, 0);
+        direction.set(1, 0, 0);
         direction.applyQuaternion(orientation);
         direction.normalize();
 
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < BUFFERSIZEX+1; i++) {
           pointerPosition.add(directiony.clone().multiplyScalar(0.1));
-          for (j = 0; j < 8; j++) {
+          for (j = 0; j < BUFFERSIZEY+1; j++) {
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
-            if (this.brushSize[(i*8)+j] != 0){
+            if (this.brushSize[(i*(BUFFERSIZEX+1))+j] != 0){
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
 
@@ -89,15 +103,15 @@ var onLoaded = require('../onloaded.js');
               posA.add(direction.clone().multiplyScalar(brushSize / 2));
               posB.add(direction.clone().multiplyScalar(-brushSize / 2));
 
-              if (this.first && this.prevIdx.position > 0) {
+              if (this.first[(i*(BUFFERSIZEX+1))+j] && this.prevIdx[(i*(BUFFERSIZEX+1))+j].position > 0) {
                 // Degenerated triangle
-                this.first = false;
-                this.sharedBuffer.addVertex(posA.x, posA.y, posA.z);
-                this.sharedBuffer.idx.normal++;
-                this.sharedBuffer.idx.color++;
-                this.sharedBuffer.idx.uv++;
+                this.first[(i*(BUFFERSIZEX+1))+j] = false;
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].addVertex(posA.x, posA.y, posA.z);
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].idx.normal++;
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].idx.color++;
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].idx.uv++;
 
-                this.idx = Object.assign({}, this.sharedBuffer.idx);
+                this.idx[(i*(BUFFERSIZEX+1))+j] = Object.assign({}, this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].idx);
               }
 
                 /*
@@ -105,16 +119,16 @@ var onLoaded = require('../onloaded.js');
                   | \ |
                   0---1
                 */
-                this.sharedBuffer.addVertex(posA.x, posA.y, posA.z);
-                this.sharedBuffer.addVertex(posB.x, posB.y, posB.z);
-                this.sharedBuffer.idx.normal += 2;
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].addVertex(posA.x, posA.y, posA.z);
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].addVertex(posB.x, posB.y, posB.z);
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].idx.normal += 2;
 
-                this.sharedBuffer.addColor(this.data.color.r, this.data.color.g, this.data.color.b);
-                this.sharedBuffer.addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
 
-                this.idx = Object.assign({}, this.sharedBuffer.idx);
+                this.idx[(i*(BUFFERSIZEX+1))+j] = Object.assign({}, this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].idx);
 
-                this.sharedBuffer.update();
+                this.sharedBuffer[(i*(BUFFERSIZEX+1))+j].update();
                 //this.computeStripVertexNormals();
             }
           }
