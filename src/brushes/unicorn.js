@@ -14,7 +14,7 @@ var onLoaded = require('../onloaded.js');
         vertexColors: THREE.VertexColors,
         side: THREE.DoubleSide
       };
-
+      this.sharedBuffer = new Array(BUFFERSIZEX * BUFFERSIZEY);
       for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
         this.sharedBuffer[i] = sharedBufferGeometryManager.addSharedBuffer('strip-' + i, new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
       }
@@ -47,7 +47,7 @@ var onLoaded = require('../onloaded.js');
       this.prevIdx      = new Array(BUFFERSIZEX * BUFFERSIZEY);
       this.idx          = new Array(BUFFERSIZEX * BUFFERSIZEY);
       this.first        = new Array(BUFFERSIZEX * BUFFERSIZEY);
-      
+
       for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
         this.sharedBuffer[i] = sharedBufferGeometryManager.getSharedBuffer('strip-' + i);
         this.sharedBuffer[i].restartPrimitive();
