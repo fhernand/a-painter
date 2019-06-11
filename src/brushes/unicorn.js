@@ -69,10 +69,10 @@ var onLoaded = require('../onloaded.js');
 
     },
     addPoint: (function () {
-      var direction = new THREE.Vector3();
+      var directionX = new THREE.Vector3();
       var directionx = new THREE.Vector3();
       var directiony = new THREE.Vector3();
-      var directionz = new THREE.Vector3();
+      var directionY = new THREE.Vector3();
 
       return function (position, orientation, pointerPosition, pressure, timestamp) {
         var converter = this.materialOptions.converter;
