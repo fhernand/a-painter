@@ -82,19 +82,19 @@ var onLoaded = require('../onloaded.js');
         directionY.applyQuaternion(orientation);
         directionY.normalize();
 
-        directionx.set(0.09, 0, 0);
+        directionx.set(0.08, 0, 0);
         directionx.applyQuaternion(orientation);
         //directionx.normalize();
 
-        directiony.set(0, 0.06, 0);
+        directiony.set(0, 0.05, 0);
         directiony.applyQuaternion(orientation);
         //directiony.normalize();
 
         directionX.set(1, 0, 0);
         directionX.applyQuaternion(orientation);
         directionX.normalize();
-        pointerPosition.add(directiony.clone().multiplyScalar(-0.8));
-        pointerPosition.add(directionx.clone().multiplyScalar(-0.8));
+        pointerPosition.add(directiony.clone().multiplyScalar(-0.6));
+        pointerPosition.add(directionx.clone().multiplyScalar(-0.3));
 
         for (i = 0; i < BUFFERSIZEX; i++) {
 
@@ -104,7 +104,7 @@ var onLoaded = require('../onloaded.js');
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
             var posA = pointerPosition.clone();
             var posB = pointerPosition.clone();
-            var brushSize = 0.006; // * pressure;//this.data.size * pressure;
+            var brushSize = 0.0055; // * pressure;//this.data.size * pressure;
             posA.add(directionX.clone().multiplyScalar(brushSize / 2));
             posB.add(directionX.clone().multiplyScalar(-brushSize / 2));
 
