@@ -72,6 +72,7 @@ var onLoaded = require('../onloaded.js');
       var direction = new THREE.Vector3();
       var directionx = new THREE.Vector3();
       var directiony = new THREE.Vector3();
+      var directionz = new THREE.Vector3();
 
       return function (position, orientation, pointerPosition, pressure, timestamp) {
         var converter = this.materialOptions.converter;
@@ -101,11 +102,11 @@ var onLoaded = require('../onloaded.js');
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
             var posA = pointerPosition.clone();
             var posB = pointerPosition.clone();
-            var posB = pointerPosition.clone();
+            var posC = pointerPosition.clone();
             var brushSize = 0.002; // * pressure;//this.data.size * pressure;
             posA.add(direction.clone().multiplyScalar(brushSize / 2));
             posB.add(direction.clone().multiplyScalar(-brushSize / 2));
-            posB.add(directionz.clone().multiplyScalar(brushSize / 2));
+            posC.add(directionz.clone().multiplyScalar(brushSize / 2));
             if (this.brushSize[(i * BUFFERSIZEX) + j] != 0){
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
