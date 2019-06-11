@@ -78,9 +78,9 @@ var onLoaded = require('../onloaded.js');
         var converter = this.materialOptions.converter;
 
         this.brushSize = this.brushSizes[pressure];
-        directionz.set(0, 0, 1);
-        directionz.applyQuaternion(orientation);
-        directionz.normalize();
+        directionY.set(0, 1, 0);
+        directionY.applyQuaternion(orientation);
+        directionY.normalize();
 
         directionx.set(0.09, 0, 0);
         directionx.applyQuaternion(orientation);
@@ -90,10 +90,11 @@ var onLoaded = require('../onloaded.js');
         directiony.applyQuaternion(orientation);
         //directiony.normalize();
 
-        direction.set(1, 0, 0);
-        direction.applyQuaternion(orientation);
-        direction.normalize();
-        pointerPosition.add(directiony.clone().multiplyScalar(-2));
+        directionX.set(1, 0, 0);
+        directionX.applyQuaternion(orientation);
+        directionX.normalize();
+        pointerPosition.add(directiony.clone().multiplyScalar(-0.8));
+        pointerPosition.add(directionx.clone().multiplyScalar(-0.8));
 
         for (i = 0; i < BUFFERSIZEX; i++) {
 
@@ -103,14 +104,14 @@ var onLoaded = require('../onloaded.js');
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
             var posA = pointerPosition.clone();
             var posB = pointerPosition.clone();
-            var brushSize = 0.009; // * pressure;//this.data.size * pressure;
-            posA.add(direction.clone().multiplyScalar(brushSize / 2));
-            posB.add(direction.clone().multiplyScalar(-brushSize / 2));
+            var brushSize = 0.006; // * pressure;//this.data.size * pressure;
+            posA.add(directionX.clone().multiplyScalar(brushSize / 2));
+            posB.add(directionX.clone().multiplyScalar(-brushSize / 2));
 
             var posC = posA.clone();
-            posC.add(directionz.clone().multiplyScalar(brushSize));
+            posC.add(directionY.clone().multiplyScalar(brushSize));
             var posD = posB.clone();
-            posC.add(directionz.clone().multiplyScalar(brushSize));
+            posD.add(directionY.clone().multiplyScalar(brushSize));
             if (this.brushSize[(i * BUFFERSIZEX) + j] != 0){
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
