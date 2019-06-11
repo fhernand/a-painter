@@ -113,7 +113,7 @@ var onLoaded = require('../onloaded.js');
 
 
 
-              if (this.first[0] && this.prevIdx[0].position > 0) {
+              if (this.prevIdx[0].position > 0) {
                 // Degenerated triangle
                 this.first[0] = false;
                 this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
@@ -143,12 +143,6 @@ var onLoaded = require('../onloaded.js');
                 this.sharedBuffer[0].update();
                 //this.computeStripVertexNormals();
             }
-            this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
-            this.sharedBuffer[0].idx.normal++;
-            this.sharedBuffer[0].idx.color++;
-            this.sharedBuffer[0].idx.uv++;
-            this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-            this.sharedBuffer[0].update();
           }
           pointerPosition = posRowBegin.clone();
         }
