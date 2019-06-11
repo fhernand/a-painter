@@ -7,6 +7,20 @@ var onLoaded = require('../onloaded.js');
     const BUFFERSIZEY = 2;
     var geometryManager = null;
 
+
+
+    onLoaded(function () {
+      var optionsBasic = {
+        vertexColors: THREE.VertexColors,
+        side: THREE.DoubleSide
+      };
+
+      for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
+        this.sharedBuffer[i] = sharedBufferGeometryManager.addSharedBuffer('strip-' + i, new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
+      }
+    });
+
+  var line = {
     this.sizeZero     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
     this.sizeOne      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
     this.sizeTwo      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
@@ -32,20 +46,7 @@ var onLoaded = require('../onloaded.js');
     this.prevIdx      = new Array(BUFFERSIZEX * BUFFERSIZEY);
     this.idx          = new Array(BUFFERSIZEX * BUFFERSIZEY);
     this.first        = new Array(BUFFERSIZEX * BUFFERSIZEY);
-
-    onLoaded(function () {
-      var optionsBasic = {
-        vertexColors: THREE.VertexColors,
-        side: THREE.DoubleSide
-      };
-
-      for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
-        this.sharedBuffer[i] = sharedBufferGeometryManager.addSharedBuffer('strip-' + i, new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
-      }
-    });
-
-  var line = {
-
+    
     init: function (color, brushSize) {
 
       for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
