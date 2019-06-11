@@ -24,8 +24,6 @@ require('./components/ui-raycaster.js');
 require('./components/camrender.js');
 require('./components/canvas-updater.js');
 
-require('super-hands');
-
 /*
 require('./brushes/line.js');
 require('./brushes/stamp.js');
