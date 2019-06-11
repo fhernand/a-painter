@@ -149,13 +149,14 @@ var onLoaded = require('../onloaded.js');
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
 
-                this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-                this.sharedBuffer[0].update();
+
                 //this.computeStripVertexNormals();
             }
           }
           pointerPosition = posRowBegin.clone();
         }
+        this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+        this.sharedBuffer[0].update();
 
         return true;
       };
