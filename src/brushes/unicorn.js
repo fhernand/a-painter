@@ -66,7 +66,7 @@ var onLoaded = require('../onloaded.js');
     undo: function () {
 
         this.sharedBuffer[0].undo(this.prevIdx[0]);
-      
+
     },
     addPoint: (function () {
       var direction = new THREE.Vector3();
@@ -130,16 +130,13 @@ var onLoaded = require('../onloaded.js');
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
 
                 this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-
-                this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
-                this.sharedBuffer[0].idx.normal++;
-                this.sharedBuffer[0].idx.color++;
-                this.sharedBuffer[0].idx.uv++;
-                this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-
-
                 //this.computeStripVertexNormals();
             }
+            this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
+            this.sharedBuffer[0].idx.normal++;
+            this.sharedBuffer[0].idx.color++;
+            this.sharedBuffer[0].idx.uv++;
+            this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
           }
           pointerPosition = posRowBegin.clone();
         }
