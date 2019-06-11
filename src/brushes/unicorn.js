@@ -95,15 +95,16 @@ var onLoaded = require('../onloaded.js');
           var posRowBegin = pointerPosition.clone();
           for (j = 0; j < BUFFERSIZEY; j++) {
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
+            var posA = pointerPosition.clone();
+            var posB = pointerPosition.clone();
+            var brushSize = 0.001; // * pressure;//this.data.size * pressure;
+            posA.add(direction.clone().multiplyScalar(brushSize / 2));
+            posB.add(direction.clone().multiplyScalar(-brushSize / 2));
             if (this.brushSize[(i * BUFFERSIZEX) + j] != 0){
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
 
-              var posA = pointerPosition.clone();
-              var posB = pointerPosition.clone();
-              var brushSize = 0.001; // * pressure;//this.data.size * pressure;
-              posA.add(direction.clone().multiplyScalar(brushSize / 2));
-              posB.add(direction.clone().multiplyScalar(-brushSize / 2));
+
 
               if (this.first[0] && this.prevIdx[0].position > 0) {
                 // Degenerated triangle
