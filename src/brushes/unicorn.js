@@ -82,18 +82,18 @@ var onLoaded = require('../onloaded.js');
         directionz.applyQuaternion(orientation);
         directionz.normalize();
 
-        directionx.set(0.1, 0, 0);
+        directionx.set(0.09, 0, 0);
         directionx.applyQuaternion(orientation);
         //directionx.normalize();
 
-        directiony.set(0, 0.1, 0);
+        directiony.set(0, 0.06, 0);
         directiony.applyQuaternion(orientation);
         //directiony.normalize();
 
         direction.set(1, 0, 0);
         direction.applyQuaternion(orientation);
         direction.normalize();
-        pointerPosition.add(directiony.clone().multiplyScalar(-0.5));
+        pointerPosition.add(directiony.clone().multiplyScalar(-2));
 
         for (i = 0; i < BUFFERSIZEX; i++) {
 
@@ -103,12 +103,14 @@ var onLoaded = require('../onloaded.js');
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
             var posA = pointerPosition.clone();
             var posB = pointerPosition.clone();
-            var brushSize = 0.004; // * pressure;//this.data.size * pressure;
+            var brushSize = 0.009; // * pressure;//this.data.size * pressure;
             posA.add(direction.clone().multiplyScalar(brushSize / 2));
             posB.add(direction.clone().multiplyScalar(-brushSize / 2));
 
             var posC = posA.clone();
-            posC.add(directionz.clone().multiplyScalar(brushSize / 2));
+            posC.add(directionz.clone().multiplyScalar(brushSize));
+            var posD = posB.clone();
+            posC.add(directionz.clone().multiplyScalar(brushSize));
             if (this.brushSize[(i * BUFFERSIZEX) + j] != 0){
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
@@ -137,9 +139,11 @@ var onLoaded = require('../onloaded.js');
                 this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
                 this.sharedBuffer[0].addVertex(posB.x, posB.y, posB.z);
                 this.sharedBuffer[0].addVertex(posC.x, posC.y, posC.z);
+                this.sharedBuffer[0].addVertex(posD.x, posD.y, posD.z);
 
-                this.sharedBuffer[0].idx.normal += 3;
+                this.sharedBuffer[0].idx.normal += 4;
 
+                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
