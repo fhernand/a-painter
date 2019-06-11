@@ -39,7 +39,7 @@ var onLoaded = require('../onloaded.js');
         side: THREE.DoubleSide
       };
 
-      for (i = 0, i < (BUFFERSIZEX * BUFFERSIZEY) + 1, i++){
+      for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
         this.sharedBuffer[i] = sharedBufferGeometryManager.addSharedBuffer('strip-' + i, new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
       }
     });
@@ -48,7 +48,7 @@ var onLoaded = require('../onloaded.js');
 
     init: function (color, brushSize) {
 
-      for (i = 0, i < (BUFFERSIZEX * BUFFERSIZEY) + 1, i++){
+      for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
         this.sharedBuffer[i] = sharedBufferGeometryManager.getSharedBuffer('strip-' + i);
         this.sharedBuffer[i].restartPrimitive();
 
@@ -59,12 +59,12 @@ var onLoaded = require('../onloaded.js');
       }
     },
     remove: function () {
-      for (i = 0, i < (BUFFERSIZEX * BUFFERSIZEY) + 1, i++){
+      for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
         this.sharedBuffer[i].remove(this.prevIdx[i], this.idx[i]);
       }
     },
     undo: function () {
-      for (i = 0, i < (BUFFERSIZEX * BUFFERSIZEY) + 1, i++){
+      for (i = 0; i < (BUFFERSIZEX * BUFFERSIZEY) + 1; i++){
         this.sharedBuffer[i].undo(this.prevIdx[i]);
       }
     },
