@@ -12,7 +12,7 @@ AFRAME.registerComponent('brush', {
 
     this.el.emit('brushcolor-changed', {color: this.color});
     this.el.emit('brushsize-changed', {brushSize: data.size});
-	this.el.emit('brightness-changed', {brightness: data.size});
+	  this.el.emit('brightness-changed', {brightness: data.size});
 
     this.active = false;
     this.obj = this.el.object3D;
@@ -143,11 +143,14 @@ AFRAME.registerComponent('brush', {
     var scale = new THREE.Vector3();
 
     return function tick (time, delta) {
-	  if (this.currentStroke && this.active) {
+    this.addedDeltas += delta;
+	  if (this.addedDeltas > 100 && this.currentStroke && this.active) {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
         this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizepartition, time);
+        this.addedDeltas = 0;
       }
+
       //this.addedDeltas += delta;
       //if (this.addedDeltas > 100 && this.currentStroke && this.active) {
       //  this.obj.matrixWorld.decompose(position, rotation, scale);
