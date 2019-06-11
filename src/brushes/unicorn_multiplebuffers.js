@@ -3,8 +3,8 @@ var sharedBufferGeometryManager = require('../sharedbuffergeometrymanager.js');
 var onLoaded = require('../onloaded.js');
 
 (function () {
-    const BUFFERSIZEX = 1;
-    const BUFFERSIZEY = 1;
+    const BUFFERSIZEX = 8;
+    const BUFFERSIZEY = 8;
     var geometryManager = null;
 
 
