@@ -66,7 +66,7 @@ var onLoaded = require('../onloaded.js');
     undo: function () {
 
         this.sharedBuffer[0].undo(this.prevIdx[0]);
-      }
+      
     },
     addPoint: (function () {
       var direction = new THREE.Vector3();
