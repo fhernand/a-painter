@@ -3,8 +3,8 @@ var sharedBufferGeometryManager = require('../sharedbuffergeometrymanager.js');
 var onLoaded = require('../onloaded.js');
 
 (function () {
-    const BUFFERSIZEX = 1;
-    const BUFFERSIZEY = 1;
+    const BUFFERSIZEX = 8;
+    const BUFFERSIZEY = 8;
     var geometryManager = null;
 
 
@@ -14,10 +14,10 @@ var onLoaded = require('../onloaded.js');
         vertexColors: THREE.VertexColors,
         side: THREE.DoubleSide
       };
-      this.sharedBuffer = new Array(BUFFERSIZEX * BUFFERSIZEY);
-      for (i = 0; i < BUFFERSIZEX * BUFFERSIZEY; i++){
-        this.sharedBuffer[i] = sharedBufferGeometryManager.addSharedBuffer('strip-' + i, new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
-      }
+      this.sharedBuffer = new Array(1);
+
+        this.sharedBuffer[0] = sharedBufferGeometryManager.addSharedBuffer('strip-0', new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
+
     });
 
   var line = {
@@ -43,29 +43,29 @@ var onLoaded = require('../onloaded.js');
       this.brushSize    = this.sizeZero;
 
 
-      this.sharedBuffer = new Array(BUFFERSIZEX * BUFFERSIZEY);
-      this.prevIdx      = new Array(BUFFERSIZEX * BUFFERSIZEY);
-      this.idx          = new Array(BUFFERSIZEX * BUFFERSIZEY);
-      this.first        = new Array(BUFFERSIZEX * BUFFERSIZEY);
+      this.sharedBuffer = new Array(1);
+      this.prevIdx      = new Array(1);
+      this.idx          = new Array(1);
+      this.first        = new Array(1);
 
-      for (i = 0; i < BUFFERSIZEX * BUFFERSIZEY; i++){
-        this.sharedBuffer[i] = sharedBufferGeometryManager.getSharedBuffer('strip-' + i);
-        this.sharedBuffer[i].restartPrimitive();
 
-        this.prevIdx[i] = Object.assign({}, this.sharedBuffer[i].idx);
-        this.idx[i] = Object.assign({}, this.sharedBuffer[i].idx);
+        this.sharedBuffer[0] = sharedBufferGeometryManager.getSharedBuffer('strip-0');
+        this.sharedBuffer[0].restartPrimitive();
 
-        this.first[i] = true;
-      }
+        this.prevIdx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+        this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+
+        this.first[0] = true;
+
     },
     remove: function () {
-      for (i = 0; i < BUFFERSIZEX * BUFFERSIZEY; i++){
-        this.sharedBuffer[i].remove(this.prevIdx[i], this.idx[i]);
-      }
+
+        this.sharedBuffer[0].remove(this.prevIdx[0], this.idx[0]);
+
     },
     undo: function () {
-      for (i = 0; i < BUFFERSIZEX * BUFFERSIZEY; i++){
-        this.sharedBuffer[i].undo(this.prevIdx[i]);
+
+        this.sharedBuffer[0].undo(this.prevIdx[0]);
       }
     },
     addPoint: (function () {
@@ -105,15 +105,15 @@ var onLoaded = require('../onloaded.js');
               posA.add(direction.clone().multiplyScalar(brushSize / 2));
               posB.add(direction.clone().multiplyScalar(-brushSize / 2));
 
-              if (this.first[(i * BUFFERSIZEX) + j] && this.prevIdx[(i * BUFFERSIZEX) + j].position > 0) {
+              if (this.first[0] && this.prevIdx[0].position > 0) {
                 // Degenerated triangle
-                this.first[(i * BUFFERSIZEX) + j] = false;
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].addVertex(posA.x, posA.y, posA.z);
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].idx.normal++;
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].idx.color++;
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].idx.uv++;
+                this.first[0] = false;
+                this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
+                this.sharedBuffer[0].idx.normal++;
+                this.sharedBuffer[0].idx.color++;
+                this.sharedBuffer[0].idx.uv++;
 
-                this.idx[(i * BUFFERSIZEX) + j] = Object.assign({}, this.sharedBuffer[(i * BUFFERSIZEX) + j].idx);
+                this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
               }
 
                 /*
@@ -121,21 +121,29 @@ var onLoaded = require('../onloaded.js');
                   | \ |
                   0---1
                 */
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].addVertex(posA.x, posA.y, posA.z);
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].addVertex(posB.x, posB.y, posB.z);
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].idx.normal += 2;
+                this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
+                this.sharedBuffer[0].addVertex(posB.x, posB.y, posB.z);
 
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+                this.sharedBuffer[0].idx.normal += 2;
 
-                this.idx[(i * BUFFERSIZEX) + j] = Object.assign({}, this.sharedBuffer[(i * BUFFERSIZEX) + j].idx);
+                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
 
-                this.sharedBuffer[(i * BUFFERSIZEX) + j].update();
+                this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+
+                this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
+                this.sharedBuffer[0].idx.normal++;
+                this.sharedBuffer[0].idx.color++;
+                this.sharedBuffer[0].idx.uv++;
+                this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+
+
                 //this.computeStripVertexNormals();
             }
           }
           pointerPosition = posRowBegin.clone();
         }
+        this.sharedBuffer[0].update();
         return true;
       };
 
