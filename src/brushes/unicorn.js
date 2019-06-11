@@ -148,6 +148,7 @@ var onLoaded = require('../onloaded.js');
             this.sharedBuffer[0].idx.color++;
             this.sharedBuffer[0].idx.uv++;
             this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+            this.sharedBuffer[0].update();
           }
           pointerPosition = posRowBegin.clone();
         }
