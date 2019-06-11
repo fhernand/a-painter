@@ -3,8 +3,8 @@ var sharedBufferGeometryManager = require('../sharedbuffergeometrymanager.js');
 var onLoaded = require('../onloaded.js');
 
 (function () {
-    const BUFFERSIZEX = 4;
-    const BUFFERSIZEY = 4;
+    const BUFFERSIZEX = 8;
+    const BUFFERSIZEY = 8;
     var geometryManager = null;
 
 
@@ -99,7 +99,7 @@ var onLoaded = require('../onloaded.js');
 
               var posA = pointerPosition.clone();
               var posB = pointerPosition.clone();
-              var brushSize = 0.01; // * pressure;//this.data.size * pressure;
+              var brushSize = 0.001; // * pressure;//this.data.size * pressure;
               posA.add(direction.clone().multiplyScalar(brushSize / 2));
               posB.add(direction.clone().multiplyScalar(-brushSize / 2));
 
