@@ -90,7 +90,9 @@ var onLoaded = require('../onloaded.js');
         direction.normalize();
 
         for (i = 0; i < BUFFERSIZEX; i++) {
+
           pointerPosition.add(directiony.clone().multiplyScalar(0.1));
+          var posRowBegin = pointerPosition.clone();
           for (j = 0; j < BUFFERSIZEY; j++) {
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
             if (this.brushSize[(i * BUFFERSIZEX) + j] != 0){
@@ -132,6 +134,7 @@ var onLoaded = require('../onloaded.js');
                 //this.computeStripVertexNormals();
             }
           }
+          pointerPosition = posRowBegin.clone();
         }
         return true;
       };
