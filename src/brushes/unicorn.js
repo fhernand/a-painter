@@ -77,6 +77,10 @@ var onLoaded = require('../onloaded.js');
         var converter = this.materialOptions.converter;
 
         this.brushSize = this.brushSizes[pressure];
+        directionz.set(0, 0, 1);
+        directionz.applyQuaternion(orientation);
+        directionz.normalize();
+
         directionx.set(0.1, 0, 0);
         directionx.applyQuaternion(orientation);
         //directionx.normalize();
@@ -97,9 +101,11 @@ var onLoaded = require('../onloaded.js');
             pointerPosition.add(directionx.clone().multiplyScalar(0.1));
             var posA = pointerPosition.clone();
             var posB = pointerPosition.clone();
-            var brushSize = 0.001; // * pressure;//this.data.size * pressure;
+            var posB = pointerPosition.clone();
+            var brushSize = 0.002; // * pressure;//this.data.size * pressure;
             posA.add(direction.clone().multiplyScalar(brushSize / 2));
             posB.add(direction.clone().multiplyScalar(-brushSize / 2));
+            posB.add(directionz.clone().multiplyScalar(brushSize / 2));
             if (this.brushSize[(i * BUFFERSIZEX) + j] != 0){
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
@@ -124,13 +130,16 @@ var onLoaded = require('../onloaded.js');
                 */
                 this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
                 this.sharedBuffer[0].addVertex(posB.x, posB.y, posB.z);
+                this.sharedBuffer[0].addVertex(posC.x, posC.y, posC.z);
 
-                this.sharedBuffer[0].idx.normal += 2;
+                this.sharedBuffer[0].idx.normal += 3;
 
+                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
                 this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
 
                 this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+                this.sharedBuffer[0].update();
                 //this.computeStripVertexNormals();
             }
             this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
@@ -141,7 +150,7 @@ var onLoaded = require('../onloaded.js');
           }
           pointerPosition = posRowBegin.clone();
         }
-        this.sharedBuffer[0].update();
+
         return true;
       };
 
