@@ -95,7 +95,10 @@ var onLoaded = require('../onloaded.js');
         directionX.normalize();
         pointerPosition.add(directiony.clone().multiplyScalar(-0.5));
         pointerPosition.add(directionx.clone().multiplyScalar(-0.5));
-
+        // this.sharedBuffer[0].restartPrimitive();
+        // this.prevIdx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+        // this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
+        // this.first[0] = true;
         for (i = 0; i < BUFFERSIZEX; i++) {
 
           pointerPosition.add(directiony.clone().multiplyScalar(0.1));
@@ -116,10 +119,7 @@ var onLoaded = require('../onloaded.js');
 
             //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
 
-            this.sharedBuffer[0].restartPrimitive();
-            this.prevIdx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-            this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-            this.first[0] = true;
+
 
               if (this.prevIdx[0].position > 0) {
                 // Degenerated triangle
