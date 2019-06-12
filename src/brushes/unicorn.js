@@ -73,8 +73,8 @@ var onLoaded = require('../onloaded.js');
        axis.applyQuaternion(rotation);
        axis.normalize();
 
-       var brushSize = 0.1;
-       //pointerPosition.add(diry.clone().multiplyScalar(-0.5));
+       var brushSize = 0.06;
+       pointerPosition.add(diry.clone().multiplyScalar(-0.2));
        //pointerPosition.add(dir.clone().multiplyScalar(-0.5));
 
        a = pointerPosition.clone();
@@ -90,9 +90,10 @@ var onLoaded = require('../onloaded.js');
        var cidx = this.idx.position;
 
        // triangle 1
+       this.sharedBuffer.addVertex(c.x, c.y, c.z);
        this.sharedBuffer.addVertex(a.x, a.y, a.z);
        this.sharedBuffer.addVertex(b.x, b.y, b.z);
-       this.sharedBuffer.addVertex(c.x, c.y, c.z);
+
 
        // triangle 2
        this.sharedBuffer.addVertex(c.x, c.y, c.z);
