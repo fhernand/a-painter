@@ -74,8 +74,8 @@ var onLoaded = require('../onloaded.js');
        axis.normalize();
 
        var brushSize = 0.5;
-       pointerPosition.add(directiony.clone().multiplyScalar(-0.5));
-       pointerPosition.add(directionx.clone().multiplyScalar(-0.5));
+       pointerPosition.add(diry.clone().multiplyScalar(-0.5));
+       pointerPosition.add(dir.clone().multiplyScalar(-0.5));
 
        a = pointerPosition.clone();
        b = pointerPosition.clone();
