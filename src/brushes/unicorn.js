@@ -73,14 +73,14 @@ var onLoaded = require('../onloaded.js');
        axis.applyQuaternion(rotation);
        axis.normalize();
 
-       var brushSize = 1;
-       var brushAngle = Math.PI / 4 + Math.random() * this.angleJitter;
-
+       var brushSize = 0.5;
+       pointerPosition.add(directiony.clone().multiplyScalar(-0.5));
+       pointerPosition.add(directionx.clone().multiplyScalar(-0.5));
 
        a = pointerPosition.clone();
        b = pointerPosition.clone();
-       a.add(dir.clone().multiplyScalar(brushSize));
-       b.add(dir.clone().multiplyScalar(-brushSize));
+       a.add(dir.clone().multiplyScalar(brushSize/2));
+       b.add(dir.clone().multiplyScalar(-brushSize/2));
        c = a.clone();
        c.add(diry.clone().multiplyScalar(brushSize));
        d = b.clone();
