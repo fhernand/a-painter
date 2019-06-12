@@ -97,7 +97,7 @@ var onLoaded = require('../onloaded.js');
        // triangle 2
        this.sharedBuffer.addVertex(c.x, c.y, c.z);
        this.sharedBuffer.addVertex(d.x, d.y, d.z);
-       this.sharedBuffer.addVertex(a.x, a.y, a.z);
+       this.sharedBuffer.addVertex(b.x, b.y, b.z);
 
        // normals & color
        for (var i = 0; i < 6; i++) {
