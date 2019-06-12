@@ -1,299 +1,305 @@
-/* globals AFRAME THREE */
+/* global AFRAME THREE */
 var sharedBufferGeometryManager = require('../sharedbuffergeometrymanager.js');
 var onLoaded = require('../onloaded.js');
 
 (function () {
-    const BUFFERSIZEX = 8;
-    const BUFFERSIZEY = 8;
-    var geometryManager = null;
+
+  onLoaded(function () {
+   var flat = new THREE.MeshBasicMaterial({
+       side: THREE.DoubleSide,
+       map: window.atlas.map,
+       vertexColors: THREE.VertexColors,
+       transparent: true,
+       alphaTest: 0.5
+   });
+
+   sharedBufferGeometryManager.addSharedBuffer('tris-flat', flat, THREE.TrianglesDrawMode);
+ });
+
+ var stamp = {
+
+   init: function (color, brushSize) {
+     this.sharedBuffer = sharedBufferGeometryManager.getSharedBuffer('tris-' + this.materialOptions.type);
+     this.prevIdx = Object.assign({}, this.sharedBuffer.idx);
+     this.idx = Object.assign({}, this.sharedBuffer.idx);
 
 
+     this.currAngle = 0;
+     this.subTextures = 1;
+     this.angleJitter = 0;
+     this.autoRotate = false;
 
-    onLoaded(function () {
-      var optionsBasic = {
-        vertexColors: THREE.VertexColors,
-        side: THREE.DoubleSide
-      };
-      this.sharedBuffer = new Array(1);
+     this.currentSize = 0;
+   },
 
-        this.sharedBuffer[0] = sharedBufferGeometryManager.addSharedBuffer('strip-0', new THREE.MeshBasicMaterial(optionsBasic), THREE.TriangleStripDrawMode);
+   remove: function () {
+     this.sharedBuffer.remove(this.prevIdx, this.idx);
+   },
 
-    });
+   undo: function () {
+     this.sharedBuffer.undo(this.prevIdx);
+   },
 
-  var line = {
-    init: function (color, brushSize) {
-      this.sizeZero     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeOne      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeTwo      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeThree    = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','3','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeFour     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','0','0','0','0','0','0','3','3','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeFive     = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','1','0','0','0','0','0','1','3','3','1','0','0','0','0','1','3','3','1','0','0','0','0','0','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeSix      = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','2','1','0','0','0','0','2','3','3','2','0','0','0','0','2','3','3','2','0','0','0','0','1','2','2','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeSeven    = ['0','0','0','0','0','0','0','0','0','0','0','1','1','0','0','0','0','0','1','3','3','1','0','0','0','1','3','3','3','3','1','0','0','1','3','3','3','3','1','0','0','0','1','3','3','1','0','0','0','0','0','1','1','0','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeEight    = ['0','0','0','0','0','0','0','0','0','0','1','1','1','1','0','0','0','1','2','3','3','2','1','0','0','1','3','3','3','3','1','0','0','1','3','3','3','3','1','0','0','1','2','3','3','2','1','0','0','0','1','1','1','1','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeNine     = ['0','0','0','0','0','0','0','0','0','0','1','2','2','1','0','0','0','1','2','3','3','2','1','0','0','2','3','3','3','3','2','0','0','2','3','3','3','3','2','0','0','1','2','3','3','2','1','0','0','0','1','2','2','1','0','0','0','0','0','0','0','0','0','0'];
-      this.sizeTen      = ['0','0','0','0','0','0','0','0','0','1','2','3','3','2','1','0','0','2','3','3','3','3','2','0','0','3','3','3','3','3','3','0','0','3','3','3','3','3','3','0','0','2','3','3','3','3','2','0','0','1','2','3','3','2','1','0','0','0','0','0','0','0','0','0'];
-      this.sizeEleven   = ['0','0','1','1','1','1','0','0','0','2','2','3','3','2','2','0','1','2','3','3','3','3','2','1','1','3','3','3','3','3','3','1','1','3','3','3','3','3','3','1','1','2','3','3','3','3','2','1','0','2','2','3','3','2','2','0','0','0','1','1','1','1','0','0'];
-      this.sizeTwelve   = ['0','0','1','2','2','1','0','0','0','2','3','3','3','3','2','0','1','3','3','3','3','3','3','1','2','3','3','3','3','3','3','2','2','3','3','3','3','3','3','2','1','3','3','3','3','3','3','1','0','2','3','3','3','3','2','0','0','0','1','2','2','1','0','0'];
-      this.sizeThirteen = ['0','1','2','3','3','2','1','0','1','3','3','3','3','3','3','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','3','3','3','3','3','3','1','0','1','2','3','3','2','1','0'];
-      this.sizeFourteen = ['0','1','3','3','3','3','1','0','1','3','3','3','3','3','3','1','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','1','3','3','3','3','3','3','1','0','1','3','3','3','3','1','0'];
-      this.sizeFifteen  = ['1','2','3','3','3','3','2','1','2','3','3','3','3','3','3','2','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','3','2','3','3','3','3','3','3','2','1','2','3','3','3','3','2','1'];
+   addPoint: (function () {
+     var axis = new THREE.Vector3();
+     var dir = new THREE.Vector3();
+     var diry = new THREE.Vector3();
+     var a = new THREE.Vector3();
+     var b = new THREE.Vector3();
+     var c = new THREE.Vector3();
+     var d = new THREE.Vector3();
+     var auxDir = new THREE.Vector3();
+     var pi2 = Math.PI / 2;
 
-      this.brushSizes 	= [this.sizeZero,this.sizeOne, this.sizeTwo, this.sizeThree,this.sizeFour, this.sizeFive, this.sizeSix, this.sizeSeven, this.sizeEight, this.sizeNine, this.sizeTen, this.sizeEleven, this.sizeTwelve, this.sizeThirteen, this.sizeFourteen, this.sizeFifteen];
-      this.brushSize    = this.sizeZero;
+     return function (position, rotation, pointerPosition, pressure, timestamp) {
+       //set Size and select materialOptions
+       if (this.currentSize != pressure){
+         this.materialOptions = stamps[pressure].materialOptions;
+         this.currentSize = pressure;
+       }
 
+       // brush side
+       dir.set(1, 0, 0);
+       dir.applyQuaternion(rotation);
+       dir.normalize();
 
-      this.sharedBuffer = new Array(1);
-      this.prevIdx      = new Array(1);
-      this.idx          = new Array(1);
-      this.first        = new Array(1);
+       // brush up
+       diry.set(0, 1, 0);
+       diry.applyQuaternion(rotation);
+       diry.normalize();
 
+       // brush normal
+       axis.set(0, 0, 1);
+       axis.applyQuaternion(rotation);
+       axis.normalize();
 
-        this.sharedBuffer[0] = sharedBufferGeometryManager.getSharedBuffer('strip-0');
-        this.sharedBuffer[0].restartPrimitive();
-
-        this.prevIdx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-        this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-
-        this.first[0] = true;
-
-    },
-    remove: function () {
-
-        this.sharedBuffer[0].remove(this.prevIdx[0], this.idx[0]);
-
-    },
-    undo: function () {
-
-        this.sharedBuffer[0].undo(this.prevIdx[0]);
-
-    },
-    addPoint: (function () {
-      var directionX = new THREE.Vector3();
-      var directionx = new THREE.Vector3();
-      var directiony = new THREE.Vector3();
-      var directionY = new THREE.Vector3();
-
-      return function (position, orientation, pointerPosition, pressure, timestamp) {
-        var converter = this.materialOptions.converter;
-
-        this.brushSize = this.brushSizes[pressure];
-        directionY.set(0, 1, 0);
-        directionY.applyQuaternion(orientation);
-        directionY.normalize();
-
-        directionx.set(0.075, 0, 0);
-        directionx.applyQuaternion(orientation);
-        //directionx.normalize();
-
-        directiony.set(0, 0.075, 0);
-        directiony.applyQuaternion(orientation);
-        //directiony.normalize();
-
-        directionX.set(1, 0, 0);
-        directionX.applyQuaternion(orientation);
-        directionX.normalize();
-        pointerPosition.add(directiony.clone().multiplyScalar(-0.5));
-        pointerPosition.add(directionx.clone().multiplyScalar(-0.5));
-        // this.sharedBuffer[0].restartPrimitive();
-        // this.prevIdx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-        // this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-        // this.first[0] = true;
-        for (i = 0; i < BUFFERSIZEX; i++) {
-
-          pointerPosition.add(directiony.clone().multiplyScalar(0.1));
-          var posRowBegin = pointerPosition.clone();
-          for (j = 0; j < BUFFERSIZEY; j++) {
-            pointerPosition.add(directionx.clone().multiplyScalar(0.1));
-            var posA = pointerPosition.clone();
-            var posB = pointerPosition.clone();
-            var brushSize = 0.003; // * pressure;//this.data.size * pressure;
-            posA.add(directionX.clone().multiplyScalar(brushSize / 2));
-            posB.add(directionX.clone().multiplyScalar(-brushSize / 2));
-
-            var posC = posA.clone();
-            posC.add(directionY.clone().multiplyScalar(brushSize));
-            var posD = posB.clone();
-            posD.add(directionY.clone().multiplyScalar(brushSize));
-            if (this.brushSize[(i * BUFFERSIZEX) + j] != 0){
-
-            //var offsetPosition = new THREE.Vector3(j*0.1,i*0.1,0).applyQuaternion(rotation)
+       var brushSize = 1;
+       var brushAngle = Math.PI / 4 + Math.random() * this.angleJitter;
 
 
+       a = pointerPosition.clone();
+       b = pointerPosition.clone();
+       a.add(dir.clone().multiplyScalar(brushSize));
+       b.add(dir.clone().multiplyScalar(-brushSize));
+       c = a.clone();
+       c.add(diry.clone().multiplyScalar(brushSize));
+       d = b.clone();
+       d.add(diry.clone().multiplyScalar(brushSize));
 
-              if (this.prevIdx[0].position > 0) {
-                // Degenerated triangle
-                this.first[0] = false;
-                this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
-                this.sharedBuffer[0].idx.normal++;
-                this.sharedBuffer[0].idx.color++;
-                this.sharedBuffer[0].idx.uv++;
+       var nidx = this.idx.position;
+       var cidx = this.idx.position;
 
-                this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-              }
+       // triangle 1
+       this.sharedBuffer.addVertex(a.x, a.y, a.z);
+       this.sharedBuffer.addVertex(b.x, b.y, b.z);
+       this.sharedBuffer.addVertex(c.x, c.y, c.z);
 
-                /*
-                  2---3
-                  | \ |
-                  0---1
-                */
-                this.sharedBuffer[0].addVertex(posA.x, posA.y, posA.z);
-                this.sharedBuffer[0].addVertex(posB.x, posB.y, posB.z);
-                this.sharedBuffer[0].addVertex(posC.x, posC.y, posC.z);
-                this.sharedBuffer[0].addVertex(posD.x, posD.y, posD.z);
+       // triangle 2
+       this.sharedBuffer.addVertex(c.x, c.y, c.z);
+       this.sharedBuffer.addVertex(d.x, d.y, d.z);
+       this.sharedBuffer.addVertex(a.x, a.y, a.z);
 
-                this.sharedBuffer[0].idx.normal += 4;
+       // normals & color
+       for (var i = 0; i < 6; i++) {
+         this.sharedBuffer.addNormal(axis.x, axis.y, axis.z);
+         this.sharedBuffer.addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+       }
 
-                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
-                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
-                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
-                this.sharedBuffer[0].addColor(this.data.color.r, this.data.color.g, this.data.color.b);
+       // UVs
+       var uv = this.data.numPoints * 6 * 2;
 
+       // subTextures?
+       var Umin = 0;
+       var Umax = 1;
 
-                //this.computeStripVertexNormals();
-            }
-          }
-          pointerPosition = posRowBegin.clone();
-        }
-        this.idx[0] = Object.assign({}, this.sharedBuffer[0].idx);
-        this.sharedBuffer[0].update();
+       var converter = this.materialOptions.converter;
 
-        return true;
-      };
+       // triangle 1 uv
+       this.sharedBuffer.addUV(converter.convertU(Umin), converter.convertV(1));
+       this.sharedBuffer.addUV(converter.convertU(Umin), converter.convertV(0));
+       this.sharedBuffer.addUV(converter.convertU(Umax), converter.convertV(0));
 
-    })(),
+       // triangle2 uv
+       this.sharedBuffer.addUV(converter.convertU(Umax), converter.convertV(0));
+       this.sharedBuffer.addUV(converter.convertU(Umax), converter.convertV(1));
+       this.sharedBuffer.addUV(converter.convertU(Umin), converter.convertV(1));
 
-    computeStripVertexNormals: (function () {
-      var pA = new THREE.Vector3();
-      var pB = new THREE.Vector3();
-      var pC = new THREE.Vector3();
-      var cb = new THREE.Vector3();
-      var ab = new THREE.Vector3();
+       this.idx = Object.assign({}, this.sharedBuffer.idx);
 
-      return function () {
-        var start = this.prevIdx.position === 0 ? 0 : (this.prevIdx.position + 1) * 3;
-        var end = (this.idx.position) * 3;
-        var vertices = this.sharedBuffer.current.attributes.position.array;
-        var normals = this.sharedBuffer.current.attributes.normal.array;
+       this.sharedBuffer.update();
 
-        for (var i = start; i <= end; i++) {
-          normals[i] = 0;
-        }
+       return true;
+     }
+   })()
 
-        var pair = true;
-        for (i = start; i < end - 6; i += 3) {
-          if (pair) {
-            pA.fromArray(vertices, i);
-            pB.fromArray(vertices, i + 3);
-            pC.fromArray(vertices, i + 6);
-          } else {
-            pB.fromArray(vertices, i);
-            pC.fromArray(vertices, i + 6);
-            pA.fromArray(vertices, i + 3);
-          }
-          pair = !pair;
+ };
 
-          cb.subVectors(pC, pB);
-          ab.subVectors(pA, pB);
-          cb.cross(ab);
-          cb.normalize();
+ var stamps = [
+   {
+     name: 'unicorn',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_0.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_1',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_1.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_2',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_2.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_3',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_3.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_4',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_4.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_5',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_5.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_6',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_6.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_7',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_7.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_8',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_8.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_9',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_9.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_10',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_10.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_11',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_11.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_12',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_12.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_13',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_13.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_14',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_14.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   },
+   {
+     name: 'unicorn_15',
+     materialOptions: {
+       type: 'flat',
+       textureSrc: 'brushes/unicorn_15.png'
+     },
+     thumbnail: 'brushes/thumb_unicornhat.gif',
+     spacing: 0.01
+   }
+ ];
 
-          normals[i] += cb.x;
-          normals[i + 1] += cb.y;
-          normals[i + 2] += cb.z;
+ // var textureLoader = new THREE.TextureLoader();
+ for (var i = 0; i < stamps.length; i++) {
+   var definition = stamps[i];
+   if (definition.materialOptions.textureSrc) {
+     definition.materialOptions.map = window.atlas.map; //textureLoader.load(definition.materialOptions.textureSrc);
+     definition.materialOptions.converter = window.atlas.getUVConverters(definition.materialOptions.textureSrc);
+     delete definition.materialOptions.textureSrc;
+   }
+   AFRAME.registerBrush(definition.name, Object.assign({}, stamp, {materialOptions: definition.materialOptions}), {thumbnail: definition.thumbnail, spacing: definition.spacing, maxPoints: 3000});
+ }
 
-          normals[i + 3] += cb.x;
-          normals[i + 4] += cb.y;
-          normals[i + 5] += cb.z;
-
-          normals[i + 6] += cb.x;
-          normals[i + 7] += cb.y;
-          normals[i + 8] += cb.z;
-        }
-
-        /*
-        first and last vertice (0 and 8) belongs just to one triangle
-        second and penultimate (1 and 7) belongs to two triangles
-        the rest of the vertices belongs to three triangles
-
-          1_____3_____5_____7
-          /\    /\    /\    /\
-         /  \  /  \  /  \  /  \
-        /____\/____\/____\/____\
-        0    2     4     6     8
-        */
-
-        // Vertices that are shared across three triangles
-        for (i = start + 2 * 3; i < end - 2 * 3; i++) {
-          normals[i] = normals[i] / 3;
-        }
-
-        // Second and penultimate triangle, that shares just two triangles
-        normals[start + 3] = normals[start + 3] / 2;
-        normals[start + 3 + 1] = normals[start + 3 + 1] / 2;
-        normals[start + 3 + 2] = normals[start + 3 * 1 + 2] / 2;
-
-        normals[end - 2 * 3] = normals[end - 2 * 3] / 2;
-        normals[end - 2 * 3 + 1] = normals[end - 2 * 3 + 1] / 2;
-        normals[end - 2 * 3 + 2] = normals[end - 2 * 3 + 2] / 2;
-      };
-    })()
-  };
-
-  var lines = [
-    {
-      name: 'unicorn',
-      materialOptions: {
-        type: 'flat'
-      },
-      thumbnail: 'brushes/thumb_unicornhd.gif'
-    },
-    {
-      name: 'unicornsquare',
-      materialOptions: {
-        type: 'flat'
-      },
-      thumbnail: 'brushes/thumb_unicornhd_square.gif'
-    },
-    {
-      name: 'unicornround',
-      materialOptions: {
-        type: 'flat'
-      },
-      thumbnail: 'brushes/thumb_unicornhd_round.gif'
-    },
-    {
-      name: 'unicornsquare2',
-      materialOptions: {
-        type: 'flat'
-      },
-      thumbnail: 'brushes/thumb_unicornhd_square2.gif'
-    },
-    {
-      name: 'unicornround2',
-      materialOptions: {
-        type: 'flat'
-      },
-      thumbnail: 'brushes/thumb_unicornhd_round2.gif'
-    },
-
-    {
-      name: 'unicorndot',
-      materialOptions: {
-        type: 'flat'
-      },
-      thumbnail: 'brushes/thumb_unicornhd_dot.gif'
-    }
-  ];
-
-  for (var i = 0; i < lines.length; i++) {
-    var definition = lines[i];
-    if (definition.materialOptions.textureSrc) {
-      definition.materialOptions.converter = window.atlas.getUVConverters(definition.materialOptions.textureSrc);
-    } else {
-      definition.materialOptions.converter = window.atlas.getUVConverters(null);
-    }
-
-    AFRAME.registerBrush(definition.name, Object.assign({}, line, {materialOptions: definition.materialOptions}), {thumbnail: definition.thumbnail, maxPoints: 3000});
-  }
+ /*
+ - type: <'flat'|'shaded'>
+   Flat: constant, just color. Shaded: phong shading with subtle speculars
+ - autoRotate: <true|false>
+   The brush rotates incrementally at 0.1rad per point
+ - angleJitter: <r:float>
+   The brush rotates randomly from -r to r
+ - subTextures: <n:int>
+   textureSrc is divided in n horizontal pieces, and the brush picks one randomly on each point
+ */
 })();
