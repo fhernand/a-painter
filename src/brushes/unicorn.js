@@ -56,6 +56,7 @@ var onLoaded = require('../onloaded.js');
        if (this.currentSize != pressure){
          this.materialOptions = stamps[pressure].materialOptions;
          this.currentSize = pressure;
+         console.log(pressure);
        }
 
        // brush side
