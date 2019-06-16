@@ -106,7 +106,8 @@ AFRAME.registerBrush = function (name, definition, options) {
 
   function wrapAddPoint (addPointMethod) {
     return function addPoint (position, orientation, pointerPosition, pressure, timestamp) {
-      if ((this.data.prevPosition && this.data.prevPosition.distanceTo(position) <= this.options.spacing) ||
+      if (
+	      //(this.data.prevPosition && this.data.prevPosition.distanceTo(position) <= this.options.spacing) ||
           this.options.maxPoints !== 0 && this.data.numPoints >= this.options.maxPoints) {
         return;
       }
