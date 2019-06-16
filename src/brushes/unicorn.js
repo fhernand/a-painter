@@ -56,8 +56,6 @@ var onLoaded = require('../onloaded.js');
        //if (this.currentSize != pressure){
          this.materialOptions = stamps[pressure].materialOptions;
          //this.currentSize = pressure;
-         console.log('unicorn brush pressure: ' + pressure);
-         console.log('unicorn texture: ' + this.materialOptions.textureSrc);
        //}
 
        // brush side
