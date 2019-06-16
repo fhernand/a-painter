@@ -148,6 +148,7 @@ AFRAME.registerComponent('brush', {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
         this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizepartition, time);
+	console.log('tick size: ' & this.sizepartition);
         //this.addedDeltas = 0;
       }
     };
@@ -161,5 +162,6 @@ AFRAME.registerComponent('brush', {
   },
   newLEDSize: function (LEDSize) {
     this.el.emit('ledsize-changed', {ledsize: LEDSize});
+    console.log('emit ledsize-changed: ' & this.sizepartition);
   }
 });
