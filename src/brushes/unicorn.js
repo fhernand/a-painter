@@ -53,11 +53,11 @@ var onLoaded = require('../onloaded.js');
 
      return function (position, rotation, pointerPosition, pressure, timestamp) {
        //set Size and select materialOptions
-       if (this.currentSize != pressure){
+       //if (this.currentSize != pressure){
          this.materialOptions = stamps[pressure].materialOptions;
-         this.currentSize = pressure;
+         //this.currentSize = pressure;
          console.log('unicorn brush pressure: ' + pressure);
-       }
+       //}
 
        // brush side
        dir.set(1, 0, 0);
