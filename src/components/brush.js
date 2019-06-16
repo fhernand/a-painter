@@ -143,21 +143,13 @@ AFRAME.registerComponent('brush', {
     var scale = new THREE.Vector3();
 
     return function tick (time, delta) {
-    this.addedDeltas += delta;
-	  if (this.addedDeltas > 10 && this.currentStroke && this.active) {
+    //this.addedDeltas += delta;
+	  if (this.currentStroke && this.active) {
         this.obj.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.system.getPointerPosition(position, rotation);
         this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizepartition, time);
-        this.addedDeltas = 0;
+        //this.addedDeltas = 0;
       }
-
-      //this.addedDeltas += delta;
-      //if (this.addedDeltas > 100 && this.currentStroke && this.active) {
-      //  this.obj.matrixWorld.decompose(position, rotation, scale);
-      //  var pointerPosition = this.system.getPointerPosition(position, rotation);
-      //  this.currentStroke.addPoint(position, rotation, pointerPosition, this.sizeModifier, time);
-	  //  this.addedDeltas = 0;
-      //}
     };
   })(),
   startNewStroke: function () {
