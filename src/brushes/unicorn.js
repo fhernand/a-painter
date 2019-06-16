@@ -144,7 +144,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_0.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_1',
@@ -153,7 +153,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_1.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_2',
@@ -162,7 +162,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_2.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_3',
@@ -171,7 +171,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_3.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_4',
@@ -180,7 +180,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_4.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_5',
@@ -189,7 +189,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_5.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_6',
@@ -198,7 +198,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_6.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_7',
@@ -207,7 +207,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_7.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_8',
@@ -216,7 +216,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_8.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_9',
@@ -225,7 +225,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_9.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_10',
@@ -234,7 +234,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_10.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_11',
@@ -243,7 +243,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_11.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_12',
@@ -252,7 +252,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_12.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_13',
@@ -261,7 +261,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_13.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_14',
@@ -270,7 +270,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_14.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    },
    {
      name: 'unicorn_15',
@@ -279,7 +279,7 @@ var onLoaded = require('../onloaded.js');
        textureSrc: 'brushes/unicorn_15.png'
      },
      thumbnail: 'brushes/thumb_unicornhat.gif',
-     spacing: 0.001
+     spacing: 0
    }
  ];
 
